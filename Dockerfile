@@ -6,9 +6,9 @@ RUN touch /tmp/runner-build-errors.log
 # Install air for code live reloading
 RUN go install github.com/cosmtrek/air@v1.49.0
 
-RUN mkdir ~/app
+RUN mkdir /app
 
-WORKDIR ~/app
+WORKDIR /app
 
 
 COPY . .
@@ -19,7 +19,8 @@ RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /houdini .
 # Set the binary as executable
 RUN chmod +x /houdini
 
-# Expose port 8084
+
+# Expose port 8086
 EXPOSE 8086
 
 # Run the entrypoint script

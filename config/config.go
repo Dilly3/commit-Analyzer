@@ -13,10 +13,11 @@ type Configuration struct {
 	Port             int    `envconfig:"port"`
 	Env              string `envconfig:"env"`
 	PostgresHost     string `envconfig:"postgres_host"`
-	PostgresPort     int    `envconfig:"postgres_port"`
+	PostgresPort     string `envconfig:"postgres_port"`
 	PostgresUser     string `envconfig:"postgres_user"`
 	PostgresPassword string `envconfig:"postgres_password"`
 	PostgresDB       string `envconfig:"postgres_db"`
+	PostgresTimezone string `envconfig:"postgres_timezone"`
 	GithubBaseURL    string `envconfig:"github_base_url"`
 	GithubToken      string `envconfig:"github_token"`
 }
