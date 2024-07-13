@@ -9,10 +9,20 @@ import (
 	"net/http"
 )
 
-func (gh *GHClient) Post(endPointURL string, reqBody, expectedResponse interface{}) error {
+func (gh *GHClient) listCommits(owner, repo string, expectedResponse interface{}) error {
+	endPointURl := fmt.Sprintf("repos/%s/%s/commits", owner, repo)
+	return gh.get(endPointURl, expectedResponse)
+}
+
+func (gh *GHClient) getRepo(owner, repo string, expectedResponse interface{}) error {
+	endPointURl := fmt.Sprintf("repos/%s/%s", owner, repo)
+	return gh.get(endPointURl, expectedResponse)
+}
+
+func (gh *GHClient) post(endPointURL string, reqBody, expectedResponse interface{}) error {
 	return gh.sendRequest(http.MethodPost, endPointURL, reqBody, expectedResponse)
 }
-func (gh *GHClient) Get(endPointURL string, expectedResponse interface{}) error {
+func (gh *GHClient) get(endPointURL string, expectedResponse interface{}) error {
 	return gh.sendRequest(http.MethodGet, endPointURL, nil, expectedResponse)
 }
 func (gh *GHClient) generateRequest(method, endpoint string, body interface{}) (*http.Request, error) {
