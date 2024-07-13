@@ -1,0 +1,40 @@
+package config
+
+import (
+	"fmt"
+	"github.com/joho/godotenv"
+	"github.com/kelseyhightower/envconfig"
+	"log"
+	"path/filepath"
+	"runtime"
+)
+
+type Configuration struct {
+	Port             int    `envconfig:"port"`
+	Env              string `envconfig:"env"`
+	PostgresHost     string `envconfig:"postgres_host"`
+	PostgresPort     int    `envconfig:"postgres_port"`
+	PostgresUser     string `envconfig:"postgres_user"`
+	PostgresPassword string `envconfig:"postgres_password"`
+	PostgresDB       string `envconfig:"postgres_db"`
+	GithubBaseURL    string `envconfig:"github_base_url"`
+	GithubToken      string `envconfig:"github_token"`
+}
+
+var Config = &Configuration{}
+
+func Init(envFile string) {
+	_, b, _, _ := runtime.Caller(0)
+	basepath := filepath.Dir(b)
+	if envFile == "" {
+		envFile = ".env"
+	}
+	log.Printf("sourcing %v", envFile)
+	if err := godotenv.Load(fmt.Sprintf("%s/../%s", basepath, envFile)); err != nil {
+		log.Fatalf("couldn't load env vars: %v", err)
+	}
+	err := envconfig.Process("houdini", Config)
+	if err != nil {
+		log.Fatalf("could not process env config: %v", err)
+	}
+}
