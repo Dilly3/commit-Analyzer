@@ -10,7 +10,7 @@ import (
 )
 
 type Configuration struct {
-	Port             int    `envconfig:"port"`
+	Port             string `envconfig:"port"`
 	Env              string `envconfig:"env"`
 	PostgresHost     string `envconfig:"postgres_host"`
 	PostgresPort     string `envconfig:"postgres_port"`

@@ -6,10 +6,6 @@ import (
 	"time"
 )
 
-//-H "Accept: application/vnd.github+json" \
-//-H "Authorization: Bearer <YOUR-TOKEN>" \
-//-H "X-GitHub-Api-Version: 2022-11-28" \
-
 type GHClient struct {
 	BaseURL    string
 	token      string

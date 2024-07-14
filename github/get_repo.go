@@ -5,7 +5,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-func (gh *GHClient) GetRepo(owner, repo string) (*model.RepoResponse, error) {
+func (gh *GHClient) GetRepo(owner, repo string) (*model.RepoInfo, error) {
 	expectedResponse := map[string]interface{}{}
 	err := gh.getRepo(owner, repo, &expectedResponse)
 	if err != nil {
@@ -16,5 +16,7 @@ func (gh *GHClient) GetRepo(owner, repo string) (*model.RepoResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &resultFromRepo, nil
+	var repoData model.RepoInfo
+	repoData = model.MapRepoResponse(&resultFromRepo)
+	return &repoData, nil
 }
