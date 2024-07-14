@@ -3,6 +3,7 @@ package storage
 import (
 	"fmt"
 	"github.com/dilly3/houdini/config"
+	"github.com/dilly3/houdini/model"
 	"github.com/rs/zerolog"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -30,6 +31,10 @@ func New(config *config.Configuration, logger *zerolog.Logger) *Storage {
 	if err != nil {
 		logger.Error().Err(err).Msg("failed to connect to db")
 
+	}
+	err = db.AutoMigrate(&model.CommitInfo{}, &model.RepoInfo{})
+	if err != nil {
+		panic(err)
 	}
 	logger.Info().Msg("connected to db")
 	str := &Storage{
