@@ -1,7 +1,7 @@
 package github
 
 import (
-	"github.com/dilly3/houdini/config"
+	"github.com/dilly3/houdini/internal/config"
 	"net/http"
 	"time"
 )

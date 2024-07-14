@@ -20,6 +20,7 @@ type RepoResponse struct {
 	ID          int    `json:"id" mapstructure:"id"`
 	Name        string `json:"name" mapstructure:"name"`
 	CreatedAt   string `json:"created_at" mapstructure:"created_at"`
+	UpdatedAt   string `json:"updated_at" mapstructure:"updated_at"`
 	URL         string `json:"html_url" mapstructure:"html_url"`
 	Description string `json:"description" mapstructure:"description"`
 	Language    string `json:"language" mapstructure:"language"`

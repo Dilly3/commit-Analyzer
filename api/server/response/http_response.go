@@ -2,7 +2,9 @@ package response
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"strings"
 )
 
 type HttpResponse struct {
@@ -20,16 +22,28 @@ func RespondWithJson(w http.ResponseWriter, message string, statusCode int, data
 		Data:    data,
 		Status:  statusCode,
 	}
-	json.NewEncoder(w).Encode(response)
+	err := json.NewEncoder(w).Encode(response)
+	if err != nil {
+		log.Printf("error marshalling client response: %v", err)
+		return
+	}
 
 }
 
 func RespondWithError(w http.ResponseWriter, statusCode int, message string) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
+	if strings.Contains(message, "error marshalling client response") {
+		statusCode = http.StatusNotFound
+	}
+	message = "Resource not found, check you entered the right url and credential"
 	response := HttpResponse{
 		Error:  message,
 		Status: statusCode,
 	}
-	json.NewEncoder(w).Encode(response)
+	err := json.NewEncoder(w).Encode(response)
+	if err != nil {
+		log.Printf("error marshalling client response: %v", err)
+		return
+	}
 }

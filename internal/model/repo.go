@@ -4,6 +4,7 @@ type RepoInfo struct {
 	ID          int    `json:"id" gorm:"primary_key"`
 	Name        string `json:"name" `
 	CreatedAt   string `json:"created_at"`
+	UpdatedAt   string `json:"updated_at"`
 	URL         string `json:"html_url"`
 	Description string `json:"description"`
 	Language    string `json:"language" `
@@ -21,6 +22,7 @@ func MapRepoResponse(repo *RepoResponse) RepoInfo {
 		ID:          repo.ID,
 		Name:        repo.Name,
 		CreatedAt:   repo.CreatedAt,
+		UpdatedAt:   repo.UpdatedAt,
 		URL:         repo.URL,
 		Description: repo.Description,
 		Language:    repo.Language,

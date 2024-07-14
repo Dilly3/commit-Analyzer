@@ -18,6 +18,10 @@ func (gh *GHClient) getRepo(owner, repo string, expectedResponse interface{}) er
 	endPointURl := fmt.Sprintf("repos/%s/%s", owner, repo)
 	return gh.get(endPointURl, expectedResponse)
 }
+func (gh *GHClient) getRepos(expectedResponse interface{}) error {
+	endPointURl := "repositories"
+	return gh.get(endPointURl, expectedResponse)
+}
 
 func (gh *GHClient) post(endPointURL string, reqBody, expectedResponse interface{}) error {
 	return gh.sendRequest(http.MethodPost, endPointURL, reqBody, expectedResponse)
