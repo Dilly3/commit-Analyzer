@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/dilly3/houdini/server/response"
+	"github.com/dilly3/houdini/api/server/response"
 	"net"
 	"net/http"
 	"sync"

@@ -1,8 +1,10 @@
 package server
 
 import (
-	"github.com/dilly3/houdini/github"
-	"github.com/dilly3/houdini/server/response"
+	"github.com/dilly3/houdini/api/server/response"
+	errs "github.com/dilly3/houdini/internal/error"
+	"github.com/dilly3/houdini/internal/storage"
+	"github.com/dilly3/houdini/pkg/github"
 	"net/http"
 )
 
@@ -26,6 +28,12 @@ func (h *Handler) GetRepoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = storage.GetDefaultStore().SaveRepo(r.Context(), getRepo)
+	if err != nil {
+		errq := errs.NewAppError("save repo:", err)
+		response.RespondWithError(w, http.StatusInternalServerError, errq.Error())
+		return
+	}
 	response.RespondWithJson(w, "repo retrieved successfully", http.StatusOK, getRepo)
 	return
 }

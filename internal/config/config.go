@@ -31,7 +31,7 @@ func Init(envFile string) {
 		envFile = ".env"
 	}
 	log.Printf("sourcing %v", envFile)
-	if err := godotenv.Load(fmt.Sprintf("%s/../%s", basepath, envFile)); err != nil {
+	if err := godotenv.Load(fmt.Sprintf("%s/../../%s", basepath, envFile)); err != nil {
 		log.Fatalf("couldn't load env vars: %v", err)
 	}
 	err := envconfig.Process("houdini", Config)

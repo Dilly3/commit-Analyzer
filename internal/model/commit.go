@@ -1,11 +1,27 @@
 package model
 
+var repoName = "houdini"
+var ownerName = "dilly3"
+
+func SetRepoName(name string) {
+	repoName = name
+}
+func SetOwnerName(name string) {
+	ownerName = name
+}
+func GetRepoName() string {
+	return repoName
+}
+func GetOwnerName() string {
+	return ownerName
+}
+
 type CommitInfo struct {
 	ID          string `gorm:"primary_key"`
-	Message     string
+	RepoName    string `json:"repo_name"`
+	Message     string `gorm:"index"`
 	AuthorName  string
 	AuthorEmail string
-	AuthorInfo  AuthorInfo `json:"-" gorm:"foreignKey:AuthorEmail"`
 	Date        string
 	URL         string
 }
@@ -14,7 +30,7 @@ type CommitInfo struct {
 func (CommitInfo) TableName() string {
 	return "commits"
 }
-func MapCommitResponse(commit *CommitResponse) CommitInfo {
+func MapCommitResponse(commit *CommitResponse, repoName string) CommitInfo {
 	id := SplitID(commit.URL)
 	return CommitInfo{
 		ID:          id,
@@ -23,5 +39,6 @@ func MapCommitResponse(commit *CommitResponse) CommitInfo {
 		AuthorEmail: commit.Author.Email,
 		Date:        commit.Author.Date,
 		URL:         commit.URL,
+		RepoName:    repoName,
 	}
 }
