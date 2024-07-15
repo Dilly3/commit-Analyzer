@@ -9,7 +9,7 @@ import (
 var schedular *gocron.Scheduler
 
 // time in minutes (1 hour)
-var timeDuration int64 = 60
+var timeDuration int64 = 30
 
 // SetTimeDuration sets the time delay for the cron job
 func SetTimeDuration(t int64) {

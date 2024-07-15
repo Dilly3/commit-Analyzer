@@ -7,6 +7,7 @@ import (
 	"github.com/dilly3/houdini/pkg/cron"
 	"github.com/dilly3/houdini/pkg/github"
 	"github.com/rs/zerolog"
+	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
 	"net/http"
 	"os"
 	"time"
