@@ -15,6 +15,8 @@ export HOUDINI_POSTGRES_USER=docker
 export HOUDINI_POSTGRES_PORT=5432
 export HOUDINI_POSTGRES_DB=houdini
 export HOUDINI_GITHUB_TOKEN=
+export HOUDINI_GITHUB_OWNER=
+export HOUDINI_GITHUB_REPO=
 export HOUDINI_POSTGRES_TIMEZONE=
 export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
 ```
@@ -22,12 +24,15 @@ export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
 <p> Add your github token to the HOUDINI_GITHUB_TOKEN variable in the .env file </p>
 <p> The HOUDINI_CRON_INTERVAL variable is the delay time in minutes for the cron job to run. </p>
 
+
 ## Installation
 <p> To install the project, you need docker running on ur machine </p>
 <p> Clone the project from the repository </p>
+<p style="color: yellow; font-weight: bold;"> *** Set up ur environment variables (github owner, github repo , github token) </p>
 <p> Run the command `make up` to start the project </p>
-<p> Run make test to run tests</p>
 
+## Test
+<p> To run the test, run the command `make test` </p>
 ```Go,
  Features
 - Retrieve repositories by language

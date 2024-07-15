@@ -20,6 +20,8 @@ type Configuration struct {
 	PostgresTimezone string `envconfig:"postgres_timezone"`
 	GithubBaseURL    string `envconfig:"github_base_url"`
 	GithubToken      string `envconfig:"github_token"`
+	GithubOwner      string `envconfig:"github_owner"`
+	GithubRepo       string `envconfig:"github_repo"`
 	CronInterval     string `envconfig:"cron_interval"`
 }
 
