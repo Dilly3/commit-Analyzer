@@ -26,10 +26,11 @@ export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
 
 
 ## Installation
-<p> To install the project, you need docker running on ur machine </p>
-<p> Clone the project from the repository </p>
-<p style="color: yellow; font-weight: bold;"> *** Set up ur environment variables (github owner, github repo , github token) </p>
-<p> Run the command `make up` to start the project </p>
+- <p> To install the project, you need docker running on ur machine </p>
+- <p> Clone the project from the repository </p>
+- <p> Run the command `go mod tidy` </p>
+- <p style="color: yellow; font-weight: bold;"> *** Set up ur environment variables (github owner, github repo , github token) </p>
+- <p> Run the command `make up` to start the project </p>
 
 ## Test
 <p> To run the test, run the command `make test` </p>
