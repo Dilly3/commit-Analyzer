@@ -20,6 +20,7 @@ type Configuration struct {
 	PostgresTimezone string `envconfig:"postgres_timezone"`
 	GithubBaseURL    string `envconfig:"github_base_url"`
 	GithubToken      string `envconfig:"github_token"`
+	CronInterval     string `envconfig:"cron_interval"`
 }
 
 var Config = &Configuration{}

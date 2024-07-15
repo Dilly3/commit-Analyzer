@@ -1,13 +1,17 @@
-### API Documentation
 
-### Overview
+<h1 style="color:dodgerblue; font-size:36px;">Api Documentation</h1>
 
-This API provides endpoints APIs to retrieve repository information and commits. 
-continuously monitor
+<h2 style="color:dodgerblue;"> Overview</h2>
 
-### Endpoints
+<h4 style="color:white;">This API provides endpoints to retrieve repository information and commits stored in the database. It also provides 
+endpoints to set the 
+credentials of the github repository to monitor and retrieve repositories by language, stars, and name.
+Github API is used to retrieve the repository information and commits.</h3>
 
-###### GET localhost:8086/v1/set/repo/credential?owner={owner}&repo={reponame}
+<h3 style="color:dodgerblue;"> Endpoints </h3>
+
+<p style="color:green; font-style: normal;text-decoration: underline; font-weight: bold;"> GET localhost:8086/v1/set/repo/credential?owner={owner}
+&repo={reponame}
 
 Set the credentials of the github repository to monitor.
 
@@ -17,15 +21,16 @@ Set the credentials of the github repository to monitor.
 - `repo` (query parameter, required): A github repository name.
 **Response:**
 - `200 OK`: repo credentials set successfully.
-###### Sample Response
-  ```json
+<p style="color:green; font-style:normal; font-weight: bold">Sample Response </p>
+  
+```json
   {
     "message": "repo credentials set successfully",
     "status": 200
   }
   ```
 
-###### GET localhost:8086/v1/repo/{name}
+<p style="color:green; font-style:normal; font-weight: bold; text-decoration: underline;"> GET localhost:8086/v1/repo/{name}
 
 Retrieve a repo by name.
 
@@ -36,8 +41,9 @@ Retrieve a repo by name.
 **Response:**
 
 - `200 OK`: repo retrieved successfully.
-###### Sample Response
-  ```json
+<p style="color:green; font-style:normal; font-weight: bold"> Sample Response </p>
+  
+```json
   {
      "message": "repo retrieved successfully",
     "data": {
@@ -56,14 +62,15 @@ Retrieve a repo by name.
   } 
   ```
 - `404 Not Found`: repo not found.
-###### Sample Response
-  ```json
+<p style="color:green; font-style:normal; font-weight: bold"> Sample Response </p>
+  
+```json
   {
     "message": "record not found",
     "status": 404
   }
   ```
-- ###### GET localhost:8086/v1/commits/{name}/{limit}
+<p style="color:green; font-style:normal; font-weight: bold;text-decoration: underline;">GET localhost:8086/v1/commits/{name}/{limit} </p>
 
 Retrieve commits by repo name.
 
@@ -75,8 +82,9 @@ Retrieve commits by repo name.
 **Response:**
 
 - `200 OK`: repo retrieved successfully.
-###### Sample Response
-  ```json
+<p style="color:green; font-style:normal; font-weight: bold">Sample Response </p>
+  
+```json
   {
      "message": "commits retrieved successfully",
     "data": {
@@ -92,7 +100,7 @@ Retrieve commits by repo name.
     "status": 200
   } 
   ```
-- ###### GET localhost:8086/v1/repos/{language}/{limit}
+<p style="color:green; font-style:normal; font-weight: bold;text-decoration: underline;">GET localhost:8086/v1/repos/{language}/{limit} </p>
 
 Retrieve repo by language.
 
@@ -104,8 +112,9 @@ Retrieve repo by language.
 **Response:**
 
 - `200 OK`: repos retrieved successfully.
-###### Sample Response
-  ```json
+<p style="color:green; font-style:normal; font-weight: bold"> Sample Response </p>
+  
+```json
   {
   "message": "repo retrieved successfully",
   "data": [
@@ -125,14 +134,15 @@ Retrieve repo by language.
   "status": 200
   } 
   ```
-###### GET localhost:8086/v1/repo-stars
+ <p style="color:green; font-style:normal; font-weight: bold; text-decoration: underline;"> GET localhost:8086/v1/repo-stars </p>
 
 Retrieve repos by stars.
 
 **Response:**
 - `200 OK`: repos retrieved successfully.
-###### Sample Response
-  ```json
+<p style="color:green; font-style:normal; font-weight: bold"> Sample Response </p>
+  
+```json
 { 
   "message": "repos retrieved successfully",
 "data": [
