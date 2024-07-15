@@ -146,7 +146,7 @@ Retrieve repos by stars.
 "forks": 0,
 "stargazers_count": 0,
 "open_issues": 0
-},
+}
   ],
     "status": 200
   } 
