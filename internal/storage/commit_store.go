@@ -5,38 +5,44 @@ import (
 	"github.com/dilly3/houdini/internal/model"
 )
 
+// ICommitStore interface
 type ICommitStore interface {
-	// GetCommitsByRepoName retrieves commits by repo ID
-	GetCommitsByRepoName(ctx context.Context, repoName string) ([]model.CommitInfo, error)
+	GetCommitsByRepoName(ctx context.Context, repoName string, limit int) ([]model.CommitInfo, error)
 	GetCommitByID(ctx context.Context, id string) (*model.CommitInfo, error)
 	SaveCommit(ctx context.Context, commit *model.CommitInfo) error
 	SaveCommits(ctx context.Context, commits []model.CommitInfo) error
 }
 
+// CommitStore struct
 type CommitStore struct {
 	storage *Storage
 }
 
+// NewCommitStore creates a new CommitStore
 func NewCommitStore(storage *Storage) *CommitStore {
 	return &CommitStore{storage: storage}
 }
 
-func (cs *CommitStore) GetCommitsByRepoName(ctx context.Context, repoName string) ([]model.CommitInfo, error) {
+// GetCommitsByRepoName gets commits by repo name
+func (cs *CommitStore) GetCommitsByRepoName(ctx context.Context, repoName string, limit int) ([]model.CommitInfo, error) {
 	var commits []model.CommitInfo
-	err := cs.storage.DB.WithContext(ctx).Where("repo_name = ?", repoName).Find(&commits).Error
+	err := cs.storage.DB.WithContext(ctx).Where("LOWER(repo_name) = LOWER(?)", repoName).Order("date desc").Limit(limit).Find(&commits).Error
 	return commits, err
 }
 
+// GetCommitByID gets commit by id
 func (cs *CommitStore) GetCommitByID(ctx context.Context, id string) (*model.CommitInfo, error) {
 	var commit model.CommitInfo
 	err := cs.storage.DB.WithContext(ctx).Where("id = ?", id).First(&commit).Error
 	return &commit, err
 }
 
+// SaveCommit saves commit
 func (cs *CommitStore) SaveCommit(ctx context.Context, commit *model.CommitInfo) error {
 	return cs.storage.DB.WithContext(ctx).FirstOrCreate(commit).Error
 }
 
+// SaveCommits saves commits
 func (cs *CommitStore) SaveCommits(ctx context.Context, commits []model.CommitInfo) error {
 	return cs.storage.DB.WithContext(ctx).Save(commits).Error
 }
