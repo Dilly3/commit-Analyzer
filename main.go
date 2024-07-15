@@ -25,7 +25,7 @@ func main() {
 	cron.SetCronJob(github.DefaultGHClient.GetCommitsCron, cron.GetTimeDuration())
 	cron.SetCronJob(github.DefaultGHClient.GetRepoCron, cron.GetTimeDuration())
 	cron.StartCronJob()
-	httpHandler := server.NewMuxRouter(handler, time.Minute)
+	httpHandler := server.NewChiRouter(handler, time.Minute)
 	httpServer := &http.Server{
 		Addr:    config.Config.Port,
 		Handler: httpHandler,

@@ -5,6 +5,9 @@ var defaultStore IStore
 func GetDefaultStore() IStore {
 	return defaultStore
 }
+func SetDefaultStore(store IStore) {
+	defaultStore = store
+}
 
 type IStore interface {
 	ICommitStore

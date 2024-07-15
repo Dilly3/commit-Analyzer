@@ -25,7 +25,8 @@ export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
 ## Installation
 <p> To install the project, you need docker running on ur machine </p>
 <p> Clone the project from the repository </p>
-<p> Run the command `docker compose up` to start the project </p>
+<p> Run the command `make up` to start the project </p>
+<p> Run make test to run tests</p>
 
 ```Go
  Features
