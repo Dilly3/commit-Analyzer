@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/dilly3/houdini/api/server"
 	"github.com/dilly3/houdini/internal/config"
+	"github.com/dilly3/houdini/internal/model"
 	"github.com/dilly3/houdini/internal/storage"
 	"github.com/dilly3/houdini/pkg/cron"
 	"github.com/dilly3/houdini/pkg/github"
@@ -19,6 +20,8 @@ func main() {
 
 	config.Init(".env")
 	storage.New(config.Config, &logger)
+	model.SetOwnerName(config.Config.GithubOwner)
+	model.SetRepoName(config.Config.GithubRepo)
 	github.DefaultGHClient = github.NewGHClient(config.Config)
 	handler := server.NewHandler(&logger)
 	cron.InitCron()

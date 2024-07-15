@@ -1,7 +1,9 @@
 package model
 
-var repoName = "houdini"
-var ownerName = "dilly3"
+import "github.com/dilly3/houdini/internal/config"
+
+var repoName = config.Config.GithubRepo
+var ownerName = config.Config.GithubOwner
 
 func SetRepoName(name string) {
 	repoName = name
