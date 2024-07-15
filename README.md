@@ -3,7 +3,7 @@ Houdini is a simple REST API that retrieves information about repositories and c
 ### Env Variables
 <p> The project uses the following environment variables </p>
 
-```Go
+```Go,
  
 export HOUDINI_PORT=:8086
 
@@ -28,7 +28,7 @@ export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
 <p> Run the command `make up` to start the project </p>
 <p> Run make test to run tests</p>
 
-```Go
+```Go,
  Features
 - Retrieve repositories by language
 - Retrieve commits by repository name

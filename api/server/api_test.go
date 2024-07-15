@@ -14,7 +14,6 @@ import (
 	"time"
 )
 
-var router http.Handler
 var handler *Handler
 
 func TestMain(m *testing.M) {
@@ -23,7 +22,6 @@ func TestMain(m *testing.M) {
 	config.Init(".env_test")
 	github.DefaultGHClient = github.NewGHClient(config.Config)
 	handler = NewHandler(&logger)
-	router = NewChiRouter(handler, time.Minute*2)
 	exitCode := m.Run()
 
 	os.Exit(exitCode)
