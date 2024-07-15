@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func NewMuxRouter(h *Handler, limiterDuration time.Duration) http.Handler {
+func NewChiRouter(h *Handler, limiterDuration time.Duration) http.Handler {
 	router := chi.NewRouter()
 	limiter := NewRateLimiter(limiterDuration)
 	//router.HandlerFunc(http.MethodGet, "/v1/repo", h.GetRepoHandler)

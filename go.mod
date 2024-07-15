@@ -10,13 +10,16 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/rs/cors v1.11.0
 	github.com/rs/zerolog v1.33.0
+	github.com/stretchr/testify v1.9.0
 	github.com/swaggo/http-swagger/example/go-chi v0.0.0-20230830153024-537f045bded0
+	go.uber.org/mock v0.4.0
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.11
 )
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
 	github.com/go-openapi/spec v0.21.0 // indirect
@@ -32,6 +35,7 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/swaggo/swag v1.16.3 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
