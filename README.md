@@ -37,7 +37,7 @@ export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
 - Retrieve commits by repository name and limit
 - 
 ```
-##### You can read more on the API documentation in the docs folder
+<p style="color: yellow; font-weight: bold;"> *** You can read more on the API documentation in the docs folder in the root directory </p>
 ### Author
 <p> Name: Anikammadu Michael  </p>
 <p> Email: michael.anikamadu@gmail.com </p>
