@@ -4,9 +4,10 @@ import (
 	"github.com/dilly3/houdini/api/server"
 	"github.com/dilly3/houdini/internal/config"
 	"github.com/dilly3/houdini/internal/model"
-	"github.com/dilly3/houdini/internal/storage"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/dilly3/houdini/pkg/cron"
 	"github.com/dilly3/houdini/pkg/github"
+	"github.com/dilly3/houdini/pkg/postgres"
 	"github.com/rs/zerolog"
 	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
 	"net/http"
@@ -19,7 +20,8 @@ func main() {
 	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
 
 	config.Init(".env")
-	storage.New(config.Config, &logger)
+	pgs := postgres.New(config.Config, &logger)
+	repository.NewStore(pgs)
 	model.SetOwnerName(config.Config.GithubOwner)
 	model.SetRepoName(config.Config.GithubRepo)
 	model.SetSince(config.Config.GithubSince)
