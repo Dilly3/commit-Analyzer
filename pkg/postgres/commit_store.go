@@ -1,18 +1,9 @@
-package storage
+package postgres
 
 import (
 	"context"
 	"github.com/dilly3/houdini/internal/model"
 )
-
-// ICommitStore interface
-type ICommitStore interface {
-	GetCommitsByRepoName(ctx context.Context, repoName string, limit int) ([]model.CommitInfo, error)
-	GetCommitByID(ctx context.Context, id string) (*model.CommitInfo, error)
-	SaveCommit(ctx context.Context, commit *model.CommitInfo) error
-	SaveCommits(ctx context.Context, commits []model.CommitInfo) error
-	GetLastCommit(ctx context.Context, repoName string) (*model.CommitInfo, error)
-}
 
 // CommitStore struct
 type CommitStore struct {

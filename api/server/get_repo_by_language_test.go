@@ -4,7 +4,7 @@ import (
 	"github.com/dilly3/houdini/api/server/mocks"
 	"github.com/dilly3/houdini/api/server/response"
 	"github.com/dilly3/houdini/internal/model"
-	"github.com/dilly3/houdini/internal/storage"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 	"net/http"
@@ -14,8 +14,8 @@ import (
 func TestGetRepoByLanguage(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
-	m := mocks.NewMockIStore(ctrl)
-	storage.SetDefaultStore(m)
+	m := mocks.NewMockIRepository(ctrl)
+	repository.NewStore(m)
 
 	goRepos := []model.RepoInfo{
 		{

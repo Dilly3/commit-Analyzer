@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/dilly3/houdini/api/server/response"
-	"github.com/dilly3/houdini/internal/storage"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 )
@@ -15,7 +15,7 @@ func (h *Handler) GetRepoByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	repo, err := storage.GetDefaultStore().GetRepoByName(r.Context(), repoName)
+	repo, err := repository.GetDefaultStore().GetRepoByName(r.Context(), repoName)
 	if err != nil {
 		h.Logger.Error().Err(err).Msg(err.Error())
 		response.RespondWithError(w, http.StatusNotFound, err.Error())

@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/dilly3/houdini/api/server/response"
-	"github.com/dilly3/houdini/internal/storage"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 	"strconv"
@@ -16,7 +16,7 @@ func (h *Handler) GetRepoByStarsCount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	repos, err := storage.GetDefaultStore().GetReposByStarCount(r.Context(), limit)
+	repos, err := repository.GetDefaultStore().GetReposByStarCount(r.Context(), limit)
 	if err != nil {
 		h.Logger.Error().Err(err).Msg("GetRepoByStarCount:failed to get repo")
 		response.RespondWithError(w, http.StatusNotFound, err.Error())
