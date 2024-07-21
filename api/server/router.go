@@ -19,6 +19,7 @@ func NewChiRouter(h *Handler, limiterDuration time.Duration) *chi.Mux {
 	})
 
 	router.Use(c.Handler)
+	router.Use(h.loggingMiddleware)
 	router.Patch("/v1/settings", h.UpdateSettingsHandler)
 	limitRoutes := router.With(limiter.IPRateLimit)
 

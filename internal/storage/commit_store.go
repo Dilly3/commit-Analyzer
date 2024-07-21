@@ -11,7 +11,7 @@ type ICommitStore interface {
 	GetCommitByID(ctx context.Context, id string) (*model.CommitInfo, error)
 	SaveCommit(ctx context.Context, commit *model.CommitInfo) error
 	SaveCommits(ctx context.Context, commits []model.CommitInfo) error
-	GetLastCommit(ctx context.Context) (*model.CommitInfo, error)
+	GetLastCommit(ctx context.Context, repoName string) (*model.CommitInfo, error)
 }
 
 // CommitStore struct
@@ -49,8 +49,8 @@ func (cs *CommitStore) SaveCommits(ctx context.Context, commits []model.CommitIn
 }
 
 // GetLastCommit gets last commit (sort by date)
-func (cs *CommitStore) GetLastCommit(ctx context.Context) (*model.CommitInfo, error) {
+func (cs *CommitStore) GetLastCommit(ctx context.Context, repoName string) (*model.CommitInfo, error) {
 	var commit model.CommitInfo
-	err := cs.storage.DB.WithContext(ctx).Order("date desc").First(&commit).Error
+	err := cs.storage.DB.WithContext(ctx).Where("repo_name = ?", repoName).Order("date desc").First(&commit).Error
 	return &commit, err
 }
