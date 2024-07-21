@@ -2,8 +2,8 @@ package server
 
 import (
 	"encoding/json"
-	"github.com/dilly3/houdini/api/server/response"
 	"github.com/dilly3/houdini/internal/model"
+	"github.com/dilly3/houdini/internal/server/response"
 	"github.com/rs/zerolog/log"
 	"io"
 	"net/http"

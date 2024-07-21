@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/dilly3/houdini/api/server/response"
 	"github.com/dilly3/houdini/internal/repository"
+	"github.com/dilly3/houdini/internal/server/response"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 )

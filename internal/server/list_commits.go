@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/dilly3/houdini/api/server/response"
-	"github.com/dilly3/houdini/pkg/github"
+	"github.com/dilly3/houdini/internal/github"
+	"github.com/dilly3/houdini/internal/server/response"
 	"net/http"
 )
 
@@ -19,7 +19,7 @@ func (h *Handler) ListCommitsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	since := params.Get("since")
-	getCommits, err := github.DefaultGHClient.ListCommits(owner, repo, since)
+	getCommits, err := github.GetGitHubAdp().ListCommits(owner, repo, since)
 	if err != nil {
 		h.Logger.Error().Err(err).Msg("failed to list commits")
 		response.RespondWithError(w, http.StatusInternalServerError, err.Error())

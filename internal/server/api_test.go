@@ -2,8 +2,9 @@ package server
 
 import (
 	"encoding/json"
-	"github.com/dilly3/houdini/api/server/response"
 	"github.com/dilly3/houdini/internal/config"
+	gh "github.com/dilly3/houdini/internal/github"
+	"github.com/dilly3/houdini/internal/server/response"
 	"github.com/dilly3/houdini/pkg/github"
 	"github.com/go-chi/chi/v5"
 	"github.com/rs/zerolog"
@@ -20,7 +21,9 @@ func TestMain(m *testing.M) {
 	zerolog.TimeFieldFormat = time.RFC3339
 	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
 	config.Init(".env_test")
-	github.DefaultGHClient = github.NewGHClient(config.Config)
+	c := config.Config
+	ghc := github.NewGHClient(c.GithubBaseURL, c.GithubToken)
+	gh.NewGHubAdaptor(ghc)
 	handler = NewHandler(&logger)
 	exitCode := m.Run()
 

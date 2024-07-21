@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/dilly3/houdini/api/server"
 	"github.com/dilly3/houdini/internal/config"
+	ghi "github.com/dilly3/houdini/internal/github"
 	"github.com/dilly3/houdini/internal/model"
 	"github.com/dilly3/houdini/internal/repository"
+	"github.com/dilly3/houdini/internal/server"
 	"github.com/dilly3/houdini/pkg/cron"
 	"github.com/dilly3/houdini/pkg/github"
-	"github.com/dilly3/houdini/pkg/postgres"
+	"github.com/dilly3/houdini/storage/postgres"
 	"github.com/rs/zerolog"
-	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
 	"net/http"
 	"os"
 	"time"
@@ -20,16 +20,18 @@ func main() {
 	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
 
 	config.Init(".env")
-	pgs := postgres.New(config.Config, &logger)
+	c := config.Config
+	pgs := postgres.New(c, &logger)
 	repository.NewStore(pgs)
-	model.SetOwnerName(config.Config.GithubOwner)
-	model.SetRepoName(config.Config.GithubRepo)
-	model.SetSince(config.Config.GithubSince)
-	github.DefaultGHClient = github.NewGHClient(config.Config)
+	model.SetOwnerName(c.GithubOwner)
+	model.SetRepoName(c.GithubRepo)
+	model.SetSince(c.GithubSince)
+	githubClient := github.NewGHClient(c.GithubBaseURL, c.GithubToken)
+	gitHubInteract := ghi.NewGHubAdaptor(githubClient)
 	handler := server.NewHandler(&logger)
 	cron.InitCron()
-	cron.SetCronJob(github.DefaultGHClient.GetCommitsCron, cron.GetTimeDuration())
-	cron.SetCronJob(github.DefaultGHClient.GetRepoCron, cron.GetTimeDuration())
+	cron.SetCronJob(gitHubInteract.GetCommitsCron, cron.GetTimeDuration(c.CronInterval))
+	cron.SetCronJob(gitHubInteract.GetRepoCron, cron.GetTimeDuration(c.CronInterval))
 	go cron.StartCronJob()
 	httpHandler := server.NewChiRouter(handler, time.Minute)
 	httpServer := &http.Server{
@@ -37,7 +39,7 @@ func main() {
 		Handler: httpHandler,
 	}
 	go server.GetLimiter().CleanUp()
-	logger.Info().Msgf("Server started on port %s", config.Config.Port)
+	logger.Info().Msgf("Server started on port %s", c.Port)
 	if err := httpServer.ListenAndServe(); err != nil {
 	}
 }
