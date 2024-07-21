@@ -47,15 +47,3 @@ type CommitInfo struct {
 func (CommitInfo) TableName() string {
 	return "commits"
 }
-func MapCommitResponse(commit *CommitResponse, repoName string) CommitInfo {
-	id := SplitID(commit.URL)
-	return CommitInfo{
-		ID:          id,
-		Message:     commit.Message,
-		AuthorName:  commit.Author.Name,
-		AuthorEmail: commit.Author.Email,
-		Date:        commit.Author.Date,
-		URL:         commit.URL,
-		RepoName:    repoName,
-	}
-}

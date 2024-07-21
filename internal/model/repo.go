@@ -17,17 +17,3 @@ type RepoInfo struct {
 func (RepoInfo) TableName() string {
 	return "repos"
 }
-func MapRepoResponse(repo *RepoResponse) RepoInfo {
-	return RepoInfo{
-		ID:          repo.ID,
-		Name:        repo.Name,
-		CreatedAt:   repo.CreatedAt,
-		UpdatedAt:   repo.UpdatedAt,
-		URL:         repo.URL,
-		Description: repo.Description,
-		Language:    repo.Language,
-		Forks:       repo.Forks,
-		Stars:       repo.Stars,
-		OpenIssues:  repo.OpenIssues,
-	}
-}
