@@ -9,9 +9,11 @@ import (
 	"net/http"
 )
 
-func (gh *GHClient) listCommits(owner, repo string, expectedResponse interface{}) error {
-	endPointURl := fmt.Sprintf("repos/%s/%s/commits", owner, repo)
-	return gh.get(endPointURl, expectedResponse)
+func (gh *GHClient) listCommits(owner, repo string, since string, expectedResponse interface{}) error {
+	var endPointURL string
+	endPointURL = fmt.Sprintf("repos/%s/%s/commits?since=%s", owner, repo, since)
+
+	return gh.get(endPointURL, expectedResponse)
 }
 
 func (gh *GHClient) getRepo(owner, repo string, expectedResponse interface{}) error {

@@ -2,6 +2,7 @@ package github
 
 import (
 	"context"
+	"fmt"
 	errs "github.com/dilly3/houdini/internal/error"
 	"github.com/dilly3/houdini/internal/model"
 	"github.com/dilly3/houdini/internal/storage"
@@ -9,9 +10,9 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (gh *GHClient) ListCommits(owner, repo string) ([]model.CommitInfo, error) {
+func (gh *GHClient) ListCommits(owner, repo string, since string) ([]model.CommitInfo, error) {
 	var commits []interface{}
-	err := gh.listCommits(owner, repo, &commits)
+	err := gh.listCommits(owner, repo, since, &commits)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +32,18 @@ func (gh *GHClient) ListCommits(owner, repo string) ([]model.CommitInfo, error) 
 
 func (gh *GHClient) GetCommitsCron() error {
 	var commits []interface{}
-	err := gh.listCommits(model.GetOwnerName(), model.GetRepoName(), &commits)
+	var since string
+	cmt, err := storage.GetDefaultStore().GetLastCommit(context.Background())
+	if err != nil {
+		log.Error().Err(err).Msg("failed to get last commit")
+		since = model.GetSince()
+		//return errs.NewAppError("listCommitsCron:failed to get last commit,", err)
+	} else {
+		log.Error().Err(nil).Msg(fmt.Sprintf("last commit found!!!!!!!!%+v", cmt))
+		since = cmt.Date
+	}
+
+	err = gh.listCommits(model.GetOwnerName(), model.GetRepoName(), since, &commits)
 	if err != nil {
 		log.Error().Err(err).Msg("failed to get commits")
 		return errs.NewAppError("listCommitsCron:failed to get commits,", err)
