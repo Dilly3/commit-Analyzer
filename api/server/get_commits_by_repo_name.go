@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/dilly3/houdini/api/server/response"
-	"github.com/dilly3/houdini/internal/storage"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 	"strconv"
@@ -29,7 +29,7 @@ func (h *Handler) GetCommitsByRepoName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	commits, err := storage.GetDefaultStore().GetCommitsByRepoName(r.Context(), repoName, limitInt)
+	commits, err := repository.GetDefaultStore().GetCommitsByRepoName(r.Context(), repoName, limitInt)
 	if err != nil {
 		h.Logger.Error().Err(err).Msg("failed to get commits by repo name")
 		response.RespondWithError(w, http.StatusNotFound, err.Error())

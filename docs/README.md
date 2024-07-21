@@ -103,7 +103,7 @@ Retrieve commits by repo name.
     "data": {
       "ID": "41791b4b3e8cb9678271b34309a024ba8870682c",
       "repo_name": "houdini",
-      "Message": "Merge pull request #6 from Dilly3/storage-functions\n\nStorage functions",
+      "Message": "Merge pull request #6 from Dilly3/repository-functions\n\nStorage functions",
       "AuthorName": "D'TechNiShan",
       "AuthorEmail": "",
       "Date": "2024-07-14T20:02:14Z",

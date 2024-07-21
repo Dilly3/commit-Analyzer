@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/dilly3/houdini/api/server/response"
-	"github.com/dilly3/houdini/internal/storage"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 	"strconv"
@@ -28,7 +28,7 @@ func (h *Handler) GetReposByLanguage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	repos, err := storage.GetDefaultStore().GetReposByLanguage(r.Context(), language, limitInt)
+	repos, err := repository.GetDefaultStore().GetReposByLanguage(r.Context(), language, limitInt)
 	if err != nil {
 		h.Logger.Error().Err(err).Msg("failed to get repos by language")
 		response.RespondWithError(w, http.StatusNotFound, err.Error())

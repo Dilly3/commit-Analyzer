@@ -3,7 +3,7 @@ package github
 import (
 	"context"
 	"github.com/dilly3/houdini/internal/model"
-	"github.com/dilly3/houdini/internal/storage"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/mitchellh/mapstructure"
 )
 
@@ -20,7 +20,7 @@ func (gh *GHClient) GetRepoCron() error {
 	}
 	var repoData model.RepoInfo
 	repoData = model.MapRepoResponse(&resultFromRepo)
-	err = storage.GetDefaultStore().SaveRepo(context.Background(), &repoData)
+	err = repository.GetDefaultStore().SaveRepo(context.Background(), &repoData)
 	if err != nil {
 		return err
 	}
