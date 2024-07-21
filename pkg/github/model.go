@@ -1,6 +1,4 @@
-package model
-
-import "strings"
+package github
 
 type CommitResponse struct {
 	CommitDetails `json:"commit" mapstructure:"commit"`
@@ -27,9 +25,4 @@ type RepoResponse struct {
 	Forks       int    `json:"forks" mapstructure:"forks"`
 	Stars       int    `json:"stargazers_count" mapstructure:"stargazers_count"`
 	OpenIssues  int    `json:"open_issues" mapstructure:"open_issues"`
-}
-
-func SplitID(url string) string {
-	split := strings.Split(url, "commits/")
-	return split[len(split)-1]
 }

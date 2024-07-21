@@ -28,8 +28,6 @@ func NewChiRouter(h *Handler, limiterDuration time.Duration) *chi.Mux {
 
 	limitRoutes.Get("/v1/repo", h.GetRepoHandler)
 	limitRoutes.Get("/v1/commits", h.ListCommitsHandler)
-	limitRoutes.Get("/v1/repos", h.GetReposHandler)
-
 	limitRoutes.Get("/v1/repo/{name}", h.GetRepoByName)
 	limitRoutes.Get("/v1/commits/{name}/{limit}", h.GetCommitsByRepoName)
 	limitRoutes.Get("/v1/repos/{language}/{limit}", h.GetReposByLanguage)

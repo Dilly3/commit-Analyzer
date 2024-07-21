@@ -1,7 +1,6 @@
 package cron
 
 import (
-	"github.com/dilly3/houdini/internal/config"
 	"github.com/go-co-op/gocron"
 	"strconv"
 
@@ -14,8 +13,8 @@ var schedular *gocron.Scheduler
 var timeDuration int64 = 15
 
 // GetTimeDuration returns the time delay for the cron job
-func GetTimeDuration() int64 {
-	intDuration, err := strconv.Atoi(config.Config.CronInterval)
+func GetTimeDuration(duration string) int64 {
+	intDuration, err := strconv.Atoi(duration)
 	if err != nil {
 		return timeDuration
 	}

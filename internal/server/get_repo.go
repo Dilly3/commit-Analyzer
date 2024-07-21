@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/dilly3/houdini/api/server/response"
-	"github.com/dilly3/houdini/pkg/github"
+	"github.com/dilly3/houdini/internal/github"
+	"github.com/dilly3/houdini/internal/server/response"
 	"net/http"
 )
 
@@ -19,7 +19,7 @@ func (h *Handler) GetRepoHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "owner is required", http.StatusBadRequest)
 		return
 	}
-	getRepo, err := github.DefaultGHClient.GetRepo(owner, repo)
+	getRepo, err := github.GetGitHubAdp().GetRepo(owner, repo)
 	if err != nil {
 		h.Logger.Error().Err(err).Msg("failed to get repo")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
