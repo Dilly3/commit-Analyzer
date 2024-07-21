@@ -1,9 +1,10 @@
-package storage
+package postgres
 
 import (
 	"fmt"
 	"github.com/dilly3/houdini/internal/config"
 	model2 "github.com/dilly3/houdini/internal/model"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/rs/zerolog"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,7 +18,7 @@ type Storage struct {
 
 var DefaultStorage *Storage
 
-func New(config *config.Configuration, logger *zerolog.Logger) *Storage {
+func New(config *config.Configuration, logger *zerolog.Logger) *repository.Store {
 
 	postgresDSN := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable TimeZone=%s",
 		config.PostgresHost,
@@ -44,7 +45,12 @@ func New(config *config.Configuration, logger *zerolog.Logger) *Storage {
 	if DefaultStorage == nil {
 		DefaultStorage = str
 	}
-	NewStore(str)
-	return str
+	cs := NewCommitStore(str)
+	rs := NewRepoStore(str)
+	pgs := &repository.Store{
+		ICommitRepository: cs, IRepoRepository: rs,
+	}
+
+	return pgs
 
 }
