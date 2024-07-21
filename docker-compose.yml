@@ -2,7 +2,7 @@ version: '3'
 
 services:
   houdini:
-    working_dir: /app
+    working_dir: /app/cmd
     build: .
     depends_on:
       - db

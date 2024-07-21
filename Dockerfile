@@ -14,7 +14,7 @@ WORKDIR /app
 COPY . .
 
 # Build the binary with the neccessary environment variables
-RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /houdini .
+RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /houdini ./cmd
 
 # Set the binary as executable
 RUN chmod +x /houdini
