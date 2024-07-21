@@ -2,7 +2,6 @@ package github
 
 import (
 	"context"
-	"fmt"
 	errs "github.com/dilly3/houdini/internal/error"
 	"github.com/dilly3/houdini/internal/model"
 	"github.com/dilly3/houdini/internal/storage"
@@ -17,6 +16,9 @@ func (gh *GHClient) ListCommits(owner, repo string, since string) ([]model.Commi
 		return nil, err
 	}
 	var commitsSlice []model.CommitInfo
+	if len(commits) < 1 {
+		return commitsSlice, nil
+	}
 	for i := 0; i < len(commits); i++ {
 		commit := model.CommitResponse{}
 		err = mapstructure.Decode(commits[i], &commit)
@@ -33,13 +35,10 @@ func (gh *GHClient) ListCommits(owner, repo string, since string) ([]model.Commi
 func (gh *GHClient) GetCommitsCron() error {
 	var commits []interface{}
 	var since string
-	cmt, err := storage.GetDefaultStore().GetLastCommit(context.Background())
+	cmt, err := storage.GetDefaultStore().GetLastCommit(context.Background(), model.GetRepoName())
 	if err != nil {
-		log.Error().Err(err).Msg("failed to get last commit")
 		since = model.GetSince()
-		//return errs.NewAppError("listCommitsCron:failed to get last commit,", err)
 	} else {
-		log.Error().Err(nil).Msg(fmt.Sprintf("last commit found!!!!!!!!%+v", cmt))
 		since = cmt.Date
 	}
 
@@ -49,6 +48,9 @@ func (gh *GHClient) GetCommitsCron() error {
 		return errs.NewAppError("listCommitsCron:failed to get commits,", err)
 	}
 	var commitsSlice []model.CommitInfo
+	if len(commits) < 1 {
+		return nil
+	}
 	for i := 0; i < len(commits); i++ {
 		commit := model.CommitResponse{}
 		err = mapstructure.Decode(commits[i], &commit)

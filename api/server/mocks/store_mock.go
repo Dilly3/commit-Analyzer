@@ -71,18 +71,18 @@ func (mr *MockIStoreMockRecorder) GetCommitsByRepoName(arg0, arg1, arg2 any) *go
 }
 
 // GetLastCommit mocks base method.
-func (m *MockIStore) GetLastCommit(arg0 context.Context) (*model.CommitInfo, error) {
+func (m *MockIStore) GetLastCommit(arg0 context.Context, arg1 string) (*model.CommitInfo, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLastCommit", arg0)
+	ret := m.ctrl.Call(m, "GetLastCommit", arg0, arg1)
 	ret0, _ := ret[0].(*model.CommitInfo)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetLastCommit indicates an expected call of GetLastCommit.
-func (mr *MockIStoreMockRecorder) GetLastCommit(arg0 any) *gomock.Call {
+func (mr *MockIStoreMockRecorder) GetLastCommit(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastCommit", reflect.TypeOf((*MockIStore)(nil).GetLastCommit), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastCommit", reflect.TypeOf((*MockIStore)(nil).GetLastCommit), arg0, arg1)
 }
 
 // GetRepoByID mocks base method.
