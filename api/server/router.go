@@ -19,9 +19,12 @@ func NewChiRouter(h *Handler, limiterDuration time.Duration) *chi.Mux {
 	})
 
 	router.Use(c.Handler)
-	router.Use(h.loggingMiddleware)
-	router.Patch("/v1/settings", h.UpdateSettingsHandler)
-	limitRoutes := router.With(limiter.IPRateLimit)
+	// Add Logger to router
+	routerWithLog := router.With(h.loggingMiddleware)
+	routerWithLog.Patch("/v1/settings", h.UpdateSettingsHandler)
+
+	// Add rate limit middleware
+	limitRoutes := routerWithLog.With(limiter.IPRateLimit)
 
 	limitRoutes.Get("/v1/repo", h.GetRepoHandler)
 	limitRoutes.Get("/v1/commits", h.ListCommitsHandler)
@@ -33,5 +36,4 @@ func NewChiRouter(h *Handler, limiterDuration time.Duration) *chi.Mux {
 	limitRoutes.Get("/v1/repos-stars/{limit}", h.GetRepoByStarsCount)
 
 	return router
-
 }
