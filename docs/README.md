@@ -10,24 +10,37 @@ Github API is used to retrieve the repository information and commits.</h3>
 
 <h3 style="color:dodgerblue;"> Endpoints </h3>
 
-<p style="color:green; font-style: normal;text-decoration: underline; font-weight: bold;"> GET localhost:8086/v1/set/repo/credential?owner={owner}
-&repo={reponame}
+<p style="color:green; font-style: normal;text-decoration: underline; font-weight: bold;"> Patch localhost:8086/v1/settings
 
-Set the credentials of the github repository to monitor.
+update the settings for the cron jobs. Set the repo to monitor and time since for commits
 
-**Request Query:**
+**Request Body:**
 
-- `owner` (query parameter, required): A github username.
-- `repo` (query parameter, required): A github repository name.
+```Go,
+type SettingsPayload struct {
+Owner string `json:"owner" validate:"required"`
+Repo  string `json:"repo" validate:"required"`
+Since string `json:"since" validate:"required"`
+}
+```
+```json 
+{
+    "owner" : "repo owner",
+    "repo" : "repo name",
+    "since" : "2022-01-01"
+}
+```
+
+
 **Response:**
 - `200 OK`: repo credentials set successfully.
 <p style="color:green; font-style:normal; font-weight: bold">Sample Response </p>
   
 ```json
   {
-    "message": "repo credentials set successfully",
-    "status": 200
-  }
+  "message": "settings updated successfully",
+  "status": 200
+}
   ```
 
 <p style="color:green; font-style:normal; font-weight: bold; text-decoration: underline;"> GET localhost:8086/v1/repo/{name}

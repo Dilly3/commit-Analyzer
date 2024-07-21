@@ -7,18 +7,9 @@ import (
 	"time"
 )
 
-func NewChiRouter(h *Handler, limiterDuration time.Duration) http.Handler {
+func NewChiRouter(h *Handler, limiterDuration time.Duration) *chi.Mux {
 	router := chi.NewRouter()
 	limiter := NewRateLimiter(limiterDuration)
-	//router.HandlerFunc(http.MethodGet, "/v1/repo", h.GetRepoHandler)
-	//router.HandlerFunc(http.MethodGet, "/v1/commits", h.ListCommitsHandler)
-	//router.HandlerFunc(http.MethodGet, "/v1/repos", h.GetReposHandler)
-	router.Get("/v1/set/repo/credential", h.SetRepoCredentialHandler)
-	router.Get("/v1/repo/{name}", h.GetRepoByName)
-	router.Get("/v1/commits/{name}/{limit}", h.GetCommitsByRepoName)
-	router.Get("/v1/repos/{language}/{limit}", h.GetReposByLanguage)
-	router.Get("/v1/repos-stars/{limit}", h.GetRepoByStarsCount)
-
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // Allows all origins
 		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
@@ -26,5 +17,20 @@ func NewChiRouter(h *Handler, limiterDuration time.Duration) http.Handler {
 		ExposedHeaders:   []string{"Content-Length"},
 		AllowCredentials: true,
 	})
-	return limiter.IPRateLimit(c.Handler(router))
+
+	router.Use(c.Handler)
+	router.Patch("/v1/settings", h.UpdateSettingsHandler)
+	limitRoutes := router.With(limiter.IPRateLimit)
+
+	limitRoutes.Get("/v1/repo", h.GetRepoHandler)
+	limitRoutes.Get("/v1/commits", h.ListCommitsHandler)
+	limitRoutes.Get("/v1/repos", h.GetReposHandler)
+
+	limitRoutes.Get("/v1/repo/{name}", h.GetRepoByName)
+	limitRoutes.Get("/v1/commits/{name}/{limit}", h.GetCommitsByRepoName)
+	limitRoutes.Get("/v1/repos/{language}/{limit}", h.GetReposByLanguage)
+	limitRoutes.Get("/v1/repos-stars/{limit}", h.GetRepoByStarsCount)
+
+	return router
+
 }

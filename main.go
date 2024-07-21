@@ -22,12 +22,13 @@ func main() {
 	storage.New(config.Config, &logger)
 	model.SetOwnerName(config.Config.GithubOwner)
 	model.SetRepoName(config.Config.GithubRepo)
+	model.SetSince(config.Config.GithubSince)
 	github.DefaultGHClient = github.NewGHClient(config.Config)
 	handler := server.NewHandler(&logger)
 	cron.InitCron()
 	cron.SetCronJob(github.DefaultGHClient.GetCommitsCron, cron.GetTimeDuration())
 	cron.SetCronJob(github.DefaultGHClient.GetRepoCron, cron.GetTimeDuration())
-	cron.StartCronJob()
+	go cron.StartCronJob()
 	httpHandler := server.NewChiRouter(handler, time.Minute)
 	httpServer := &http.Server{
 		Addr:    config.Config.Port,
