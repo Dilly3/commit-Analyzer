@@ -8,7 +8,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (g *GHubAdaptor) ListCommits(owner, repo, since string) ([]model.CommitInfo, error) {
+func (g *GHubITR) ListCommits(owner, repo, since string) ([]model.CommitInfo, error) {
 	var commitsInfo []model.CommitInfo
 	res, err := g.ghc.ListCommits(owner, repo, since)
 	if err != nil {
@@ -22,7 +22,7 @@ func (g *GHubAdaptor) ListCommits(owner, repo, since string) ([]model.CommitInfo
 }
 
 // GetCommitsCron runs in the background to fetch commits
-func (g *GHubAdaptor) GetCommitsCron() error {
+func (g *GHubITR) GetCommitsCron() error {
 	var since string
 	cmt, err := repository.GetDefaultStore().GetLastCommit(context.Background(), model.GetRepoName())
 	if err != nil {
