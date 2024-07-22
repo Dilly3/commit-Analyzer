@@ -7,7 +7,7 @@ import (
 	"github.com/dilly3/houdini/internal/repository"
 )
 
-func (g *GHubAdaptor) GetRepo(owner, repo string) (*model.RepoInfo, error) {
+func (g *GHubITR) GetRepo(owner, repo string) (*model.RepoInfo, error) {
 	res, err := g.ghc.GetRepo(owner, repo)
 	if err != nil {
 		return nil, errs.NewAppError("failed to get repo", err)
@@ -15,13 +15,12 @@ func (g *GHubAdaptor) GetRepo(owner, repo string) (*model.RepoInfo, error) {
 	repoData := mapRepoResponse(res)
 	return &repoData, nil
 }
-func (g *GHubAdaptor) GetRepoCron() error {
+func (g *GHubITR) GetRepoCron() error {
 
 	res, err := g.ghc.GetRepo(model.GetOwnerName(), model.GetRepoName())
 	if err != nil {
 		return err
 	}
-
 	var repoData model.RepoInfo
 	repoData = mapRepoResponse(res)
 	err = repository.GetDefaultStore().SaveRepo(context.Background(), &repoData)

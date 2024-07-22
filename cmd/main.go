@@ -27,7 +27,7 @@ func main() {
 	model.SetRepoName(c.GithubRepo)
 	model.SetSince(c.GithubSince)
 	githubClient := github.NewGHClient(c.GithubBaseURL, c.GithubToken)
-	gitHubInteract := ghi.NewGHubAdaptor(githubClient)
+	gitHubInteract := ghi.NewGHubITR(githubClient)
 	handler := server.NewHandler(&logger)
 	cron.InitCron()
 	cron.SetCronJob(gitHubInteract.GetCommitsCron, cron.GetTimeDuration(c.CronInterval))
@@ -41,5 +41,7 @@ func main() {
 	go server.GetLimiter().CleanUp()
 	logger.Info().Msgf("Server started on port %s", c.Port)
 	if err := httpServer.ListenAndServe(); err != nil {
+		cron.StopCronJob()
+		logger.Error().Err(err).Msg(err.Error())
 	}
 }
