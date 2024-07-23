@@ -16,6 +16,9 @@ func mapToCommitsInfo(commits []github.CommitResponse, repoName string) []model.
 		commit := commits[i]
 		commitInfo := mapToCommitInfo(&commit, repoName)
 		commitInfo.ID = splitID(commit.URL)
+		if len(commitInfo.Message) > 255 {
+			commitInfo.Message = commitInfo.Message[:252] + "..."
+		}
 		commitsInfo = append(commitsInfo, commitInfo)
 	}
 	return commitsInfo
