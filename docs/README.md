@@ -12,7 +12,8 @@ Github API is used to retrieve the repository information and commits.</h3>
 
 <p style="color:green; font-style: normal;text-decoration: underline; font-weight: bold;"> Patch localhost:8086/v1/settings
 
-update the settings for the cron jobs. Set the repo to monitor and time since for commits
+update the settings for the cron jobs. Set the repo to monitor and time since for commits.
+After the settings are updated, a database reset is perform to delete records in the database newer than the since date.
 
 **Request Body:**
 
