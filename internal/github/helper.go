@@ -3,6 +3,7 @@ package github
 import (
 	"github.com/dilly3/houdini/internal/model"
 	"github.com/dilly3/houdini/pkg/github"
+	"strconv"
 	"strings"
 )
 
@@ -46,4 +47,14 @@ func mapRepoResponse(repo *github.RepoResponse) model.RepoInfo {
 		Stars:       repo.Stars,
 		OpenIssues:  repo.OpenIssues,
 	}
+}
+func stringToInteger(s string) int {
+	if s == "" {
+		return 0
+	}
+	num, err := strconv.Atoi(s)
+	if err != nil {
+		return 0
+	}
+	return num
 }

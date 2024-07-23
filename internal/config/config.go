@@ -7,6 +7,15 @@ import (
 	"log"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"time"
+)
+
+var (
+	owner   = "github_owner"
+	repo    = "github_repo"
+	since   = "github_since"
+	perPage = "github_per_page"
 )
 
 type Configuration struct {
@@ -19,11 +28,16 @@ type Configuration struct {
 	PostgresDB       string `envconfig:"postgres_db"`
 	PostgresTimezone string `envconfig:"postgres_timezone"`
 	GithubBaseURL    string `envconfig:"github_base_url"`
+	GithubPerPage    string `envconfig:"github_per_page"`
 	GithubSince      string `envconfig:"github_since"`
 	GithubToken      string `envconfig:"github_token"`
 	GithubOwner      string `envconfig:"github_owner"`
 	GithubRepo       string `envconfig:"github_repo"`
 	CronInterval     string `envconfig:"cron_interval"`
+	RedisHost        string `envconfig:"redis_host"`
+	RedisADDR        string `envconfig:"redis_addr"`
+	RedisPassword    string `envconfig:"redis_password"`
+	RedisUser        string `envconfig:"redis_user"`
 }
 
 var Config = &Configuration{}
@@ -42,4 +56,23 @@ func Init(envFile string) {
 	if err != nil {
 		log.Fatalf("could not process env config: %v", err)
 	}
+}
+
+func GetSettings() map[string]string {
+	return map[string]string{
+		owner:   Config.GithubOwner,
+		repo:    Config.GithubRepo,
+		since:   Config.GithubSince,
+		perPage: Config.GithubPerPage,
+	}
+}
+
+func GetTimeDuration() time.Duration {
+	aInt, err := strconv.Atoi(Config.CronInterval)
+	if err != nil {
+		log.Println("failed to convert cron interval to int")
+		return 1
+	}
+	return time.Minute * time.Duration(aInt)
+
 }

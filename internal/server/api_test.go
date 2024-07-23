@@ -23,7 +23,7 @@ func TestMain(m *testing.M) {
 	config.Init(".env_test")
 	c := config.Config
 	ghc := github.NewGHClient(c.GithubBaseURL, c.GithubToken)
-	gh.NewGHubAdaptor(ghc)
+	gh.NewGHubITR(ghc)
 	handler = NewHandler(&logger)
 	exitCode := m.Run()
 
