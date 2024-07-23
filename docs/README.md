@@ -27,7 +27,8 @@ Since string `json:"since" validate:"required"`
 {
     "owner" : "repo owner",
     "repo" : "repo name",
-    "since" : "2022-01-01"
+    "since" : "2022-01-01",
+    "per_page": 40
 }
 ```
 
