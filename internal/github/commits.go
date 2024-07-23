@@ -67,7 +67,7 @@ func (g *GHubITR) GetCommitsCron() error {
 				log.Printf("retring: retry left %d", retries)
 				if retries < 1 {
 					completeChan <- true
-					return
+					break
 				}
 				continue
 			}
@@ -78,7 +78,7 @@ func (g *GHubITR) GetCommitsCron() error {
 				g.page[0] = 1
 				g.mu.Unlock()
 				completeChan <- true
-				return
+				break
 			}
 			// terminate the goroutine before a new cron starts
 			if time.Since(startTime) > (tm - time.Minute) {
@@ -87,7 +87,7 @@ func (g *GHubITR) GetCommitsCron() error {
 				g.page[0]++
 				g.mu.Unlock()
 				completeChan <- true
-				return
+				break
 			}
 			// increase page number by 1
 			g.mu.Lock()
@@ -95,6 +95,7 @@ func (g *GHubITR) GetCommitsCron() error {
 			g.mu.Unlock()
 
 		}
+		return
 
 	}(completeChan, responseChan, g.page, since, tm)
 
