@@ -53,7 +53,7 @@ func (g *GHubITR) GetCommitsCron() error {
 	responseChan := make(chan []github.CommitResponse)
 	arrInt := []int{1}
 	tm := config.GetTimeDuration()
-
+	// fetch commits in the background
 	go func(chan bool, chan []github.CommitResponse, []int, *string, time.Duration) {
 		startTime := time.Now()
 		for {
@@ -80,7 +80,7 @@ func (g *GHubITR) GetCommitsCron() error {
 
 	}(completeChan, responseChan, arrInt, since, tm)
 
-	// listen for the response
+	// listen for the response from fetched commits
 	for {
 		select {
 		case <-completeChan:
