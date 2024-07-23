@@ -36,7 +36,8 @@ func (g *GHubITR) ListCommits(owner, repo, since string, page int) ([]model.Comm
 func (g *GHubITR) GetCommitsCron() error {
 	var since *string
 	cac := cache.GetDefaultCache()
-	cmt, err := repository.GetDefaultStore().GetLastCommit(context.Background(), cac.GetRepo())
+	store := repository.GetDefaultStore()
+	cmt, err := store.GetLastCommit(context.Background(), cac.GetRepo())
 	if err != nil {
 		s := cache.GetDefaultCache().GetSince()
 		since = &s
@@ -51,34 +52,51 @@ func (g *GHubITR) GetCommitsCron() error {
 	log.Info().Msg("fetching commits for repo:: " + cac.GetRepo())
 	completeChan := make(chan bool)
 	responseChan := make(chan []github.CommitResponse)
-	arrInt := []int{1}
 	tm := config.GetTimeDuration()
 	// fetch commits in the background
 	go func(chan bool, chan []github.CommitResponse, []int, *string, time.Duration) {
 		startTime := time.Now()
+		retries := config.Config.NetworkRetry
 		for {
-			log.Info().Msg("fetching commits for page:: " + strconv.Itoa(arrInt[0]))
+			log.Info().Msg("fetching commits for page:: " + strconv.Itoa(g.page[0]))
 			time.Sleep(10 * time.Second)
-			res, err := g.ghc.ListCommits(cac.GetOwner(), cac.GetRepo(), *since, perP, arrInt[0])
+			res, err := g.ghc.ListCommits(cac.GetOwner(), cac.GetRepo(), *since, perP, g.page[0])
 			if err != nil {
 				log.Error().Err(err).Msg("failed to get commits")
-				return
+				retries--
+				log.Printf("retring: retry left %d", retries)
+				if retries < 1 {
+					completeChan <- true
+					return
+				}
+				continue
 			}
 			responseChan <- res
 			if len(res) < 1 {
+				// reset page number to 1 because we have successfully fetched all commits
+				g.mu.Lock()
+				g.page[0] = 1
+				g.mu.Unlock()
 				completeChan <- true
 				return
 			}
-
-			if time.Since(startTime) > tm-time.Minute {
+			// terminate the goroutine before a new cron starts
+			if time.Since(startTime) > (tm - time.Minute) {
+				// increase page number by 1 before the end of the goroutine
+				g.mu.Lock()
+				g.page[0]++
+				g.mu.Unlock()
 				completeChan <- true
 				return
 			}
-			arrInt[0]++
+			// increase page number by 1
+			g.mu.Lock()
+			g.page[0]++
+			g.mu.Unlock()
 
 		}
 
-	}(completeChan, responseChan, arrInt, since, tm)
+	}(completeChan, responseChan, g.page, since, tm)
 
 	// listen for the response from fetched commits
 	for {
