@@ -45,3 +45,8 @@ func (cs *CommitStore) GetLastCommit(ctx context.Context, repoName string) (*mod
 	err := cs.storage.DB.WithContext(ctx).Where("repo_name = ?", repoName).Order("date desc").First(&commit).Error
 	return &commit, err
 }
+
+// DeleteByDate hard deletes commits by date
+func (cs *CommitStore) DeleteByDate(ctx context.Context, repoName, date string) error {
+	return cs.storage.DB.WithContext(ctx).Delete(&model.CommitInfo{}, "date > ? AND repo_name = ? ", date, repoName).Error
+}

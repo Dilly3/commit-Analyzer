@@ -58,7 +58,7 @@ func (g *GHubITR) GetCommitsCron() error {
 		startTime := time.Now()
 		retries := config.Config.NetworkRetry
 		for {
-			log.Info().Msg("fetching commits for page:: " + strconv.Itoa(g.page[0]))
+			log.Info().Msg("fetching commits page:: " + strconv.Itoa(g.page[0]))
 			time.Sleep(10 * time.Second)
 			res, err := g.ghc.ListCommits(cac.GetOwner(), cac.GetRepo(), *since, perP, g.page[0])
 			if err != nil {
