@@ -34,6 +34,7 @@ type Configuration struct {
 	GithubOwner      string `envconfig:"github_owner"`
 	GithubRepo       string `envconfig:"github_repo"`
 	CronInterval     string `envconfig:"cron_interval"`
+	NetworkRetry     int    `envconfig:"network_retry"`
 	RedisHost        string `envconfig:"redis_host"`
 	RedisADDR        string `envconfig:"redis_addr"`
 	RedisPassword    string `envconfig:"redis_password"`
