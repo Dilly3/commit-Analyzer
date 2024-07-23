@@ -5,6 +5,7 @@ import (
 	errs "github.com/dilly3/houdini/internal/error"
 	"github.com/dilly3/houdini/internal/model"
 	"github.com/dilly3/houdini/internal/repository"
+	"github.com/dilly3/houdini/internal/repository/cache"
 )
 
 func (g *GHubITR) GetRepo(owner, repo string) (*model.RepoInfo, error) {
@@ -16,8 +17,8 @@ func (g *GHubITR) GetRepo(owner, repo string) (*model.RepoInfo, error) {
 	return &repoData, nil
 }
 func (g *GHubITR) GetRepoCron() error {
-
-	res, err := g.ghc.GetRepo(model.GetOwnerName(), model.GetRepoName())
+	cac := cache.GetDefaultCache()
+	res, err := g.ghc.GetRepo(cac.GetOwner(), cac.GetRepo())
 	if err != nil {
 		return err
 	}

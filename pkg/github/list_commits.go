@@ -4,9 +4,9 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-func (gh *GHClient) ListCommits(owner, repo string, since string) ([]CommitResponse, error) {
+func (gh *GHClient) ListCommits(owner, repo string, since string, perPage, page int) ([]CommitResponse, error) {
 	var commits []interface{}
-	err := gh.listCommits(owner, repo, since, &commits)
+	err := gh.listCommits(owner, repo, since, perPage, page, &commits)
 	if err != nil {
 		return nil, err
 	}

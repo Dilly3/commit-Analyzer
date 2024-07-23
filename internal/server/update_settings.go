@@ -2,17 +2,19 @@ package server
 
 import (
 	"encoding/json"
-	"github.com/dilly3/houdini/internal/model"
+	"github.com/dilly3/houdini/internal/repository/cache"
 	"github.com/dilly3/houdini/internal/server/response"
 	"github.com/rs/zerolog/log"
 	"io"
 	"net/http"
+	"strconv"
 )
 
 type SettingsPayload struct {
-	Owner string `json:"owner" validate:"required"`
-	Repo  string `json:"repo" validate:"required"`
-	Since string `json:"since" validate:"required"`
+	Owner   string `json:"owner" validate:"required"`
+	Repo    string `json:"repo" validate:"required"`
+	Since   string `json:"since" validate:"required"`
+	PerPage int    `json:"per_page" validate:"required"`
 }
 
 func (h *Handler) UpdateSettingsHandler(w http.ResponseWriter, r *http.Request) {
@@ -37,9 +39,12 @@ func (h *Handler) UpdateSettingsHandler(w http.ResponseWriter, r *http.Request) 
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	cac := cache.GetDefaultCache()
+	cac.SetOwner(payload.Owner)
 
-	model.SetOwnerName(payload.Owner)
-	model.SetRepoName(payload.Repo)
-	model.SetSince(payload.Since)
+	cac.SetRepo(payload.Repo)
+	cac.SetSince(payload.Since)
+	inter := strconv.Itoa(payload.PerPage)
+	cac.SetPerPage(inter)
 	response.RespondWithJson(w, "settings updated successfully", http.StatusOK, nil)
 }

@@ -6,20 +6,26 @@ Houdini is a simple REST API that retrieves information about repositories and c
 ```Go,
  
 export HOUDINI_PORT=:8086
-
-export HOUDINI_CRON_INTERVAL=10
+export HOUDINI_CRON_INTERVAL=6
 
 export HOUDINI_POSTGRES_HOST=db
 export HOUDINI_POSTGRES_PASSWORD=docker
 export HOUDINI_POSTGRES_USER=docker
 export HOUDINI_POSTGRES_PORT=5432
 export HOUDINI_POSTGRES_DB=houdini
+export HOUDINI_POSTGRES_TIMEZONE=Africa/Lagos
+
+export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
 export HOUDINI_GITHUB_TOKEN=
 export HOUDINI_GITHUB_OWNER=
 export HOUDINI_GITHUB_REPO=
-export HOUDINI_GITHUB_SINCE=2024-07-15T00:00:00Z
-export HOUDINI_POSTGRES_TIMEZONE=
-export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
+export HOUDINI_GITHUB_PER_PAGE=40
+export HOUDINI_GITHUB_SINCE=2023-07-01T00:00:00Z
+
+export HOUDINI_REDIS_PASSWORD=redis123
+export HOUDINI_REDIS_User=user123
+export HOUDINI_REDIS_ADDR=redis:6379
+export HOUDINI_REDIS_PORT=6379
 ```
 <p> the env file in the root directory of the project houses the necessary environment variables for the project to run successfully. </p> 
 <p> Add your github token to the HOUDINI_GITHUB_TOKEN variable in the .env file </p>

@@ -14,13 +14,13 @@ func mapToCommitsInfo(commits []github.CommitResponse, repoName string) []model.
 	var commitsInfo []model.CommitInfo
 	for i := 0; i < len(commits); i++ {
 		commit := commits[i]
-		commitInfo := mapCommitResponse(&commit, repoName)
+		commitInfo := mapToCommitInfo(&commit, repoName)
 		commitInfo.ID = splitID(commit.URL)
 		commitsInfo = append(commitsInfo, commitInfo)
 	}
 	return commitsInfo
 }
-func mapCommitResponse(commit *github.CommitResponse, repoName string) model.CommitInfo {
+func mapToCommitInfo(commit *github.CommitResponse, repoName string) model.CommitInfo {
 	id := splitID(commit.URL)
 	return model.CommitInfo{
 		ID:          id,
