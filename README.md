@@ -6,7 +6,9 @@ Houdini is a simple REST API that retrieves information about repositories and c
 ```Go,
  
 export HOUDINI_PORT=:8086
-export HOUDINI_CRON_INTERVAL=6
+# set cron interval value in minutes (60 = 1 hour)
+export HOUDINI_CRON_INTERVAL=4
+export HOUDINI_NETWORK_RETRY=3
 
 export HOUDINI_POSTGRES_HOST=db
 export HOUDINI_POSTGRES_PASSWORD=docker
@@ -19,7 +21,7 @@ export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
 export HOUDINI_GITHUB_TOKEN=
 export HOUDINI_GITHUB_OWNER=
 export HOUDINI_GITHUB_REPO=
-export HOUDINI_GITHUB_PER_PAGE=40
+export HOUDINI_GITHUB_PER_PAGE=60
 export HOUDINI_GITHUB_SINCE=2023-07-01T00:00:00Z
 
 export HOUDINI_REDIS_PASSWORD=redis123

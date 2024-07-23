@@ -1,7 +1,9 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
+	"github.com/dilly3/houdini/internal/repository"
 	"github.com/dilly3/houdini/internal/repository/cache"
 	"github.com/dilly3/houdini/internal/server/response"
 	"github.com/rs/zerolog/log"
@@ -46,5 +48,11 @@ func (h *Handler) UpdateSettingsHandler(w http.ResponseWriter, r *http.Request) 
 	cac.SetSince(payload.Since)
 	inter := strconv.Itoa(payload.PerPage)
 	cac.SetPerPage(inter)
+	// Delete all commits newer than the new since date
+	ctx := context.Background()
+	err = repository.GetDefaultStore().DeleteByDate(ctx, cac.GetRepo(), cac.GetSince())
+	if err != nil {
+		h.Logger.Error().Err(err).Msg("failed to delete commits")
+	}
 	response.RespondWithJson(w, "settings updated successfully", http.StatusOK, nil)
 }
