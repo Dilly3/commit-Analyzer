@@ -18,7 +18,7 @@ export HOUDINI_POSTGRES_DB=houdini
 export HOUDINI_POSTGRES_TIMEZONE=Africa/Lagos
 
 export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
-export HOUDINI_GITHUB_TOKEN=
+export HOUDINI_GITHUB_TOKEN={your_github_token}
 export HOUDINI_GITHUB_OWNER=chromium
 export HOUDINI_GITHUB_REPO=chromium
 export HOUDINI_GITHUB_PER_PAGE=60
@@ -30,16 +30,17 @@ export HOUDINI_REDIS_ADDR=redis:6379
 export HOUDINI_REDIS_PORT=6379
 ```
 <p> the env file in the root directory of the project houses the necessary environment variables for the project to run successfully. </p> 
-<p> Add your github token to the HOUDINI_GITHUB_TOKEN variable in the .env file </p>
+<p> *** N/B Add your github token to the HOUDINI_GITHUB_TOKEN variable in the .env file </p>
 <p> The HOUDINI_CRON_INTERVAL variable is the delay time in minutes for the cron job to run. </p>
 
 
 ## Installation
-- <p> To install the project, you need docker running on ur machine </p>
+- <p style="color: red; font-weight: bold;"> To install the project, you need docker running on ur machine </p>
 - <p> Clone the project from the repository </p>
 - <p> Run the command `go mod tidy` </p>
-- <p style="color: yellow; font-weight: bold;"> *** Set up ur environment variables (github owner, github repo , github token) </p>
-- <p> Run the command `make up` to start the project </p>
+- <p style="color: red; font-weight: bold;"> *** Set up ur environment variables (github token). Add the Github token before you run the app </p>
+- <p> Run the command `make up-build` to build the project initially </p>
+- <p> Run the command `make up` to start the project subsequently </p>
 
 ## Test
 <p> To run the test, run the command `make test` </p>
