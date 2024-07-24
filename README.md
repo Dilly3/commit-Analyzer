@@ -39,8 +39,7 @@ export HOUDINI_REDIS_PORT=6379
 - <p> Clone the project from the repository <a href="https://github.com/Dilly3/houdini">Github</a> </p>
 - <p> Run the command `go mod tidy` </p>
 - <p style="color: red; font-weight: bold;"> *** Set up ur environment variables (github token). Add the Github token before you run the app </p>
-- <p> How to create gitHub token <a href="https://docs.github.
-com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic"> Create Token </a></p>
+- <p> How to create gitHub token <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic">Token</a></p>
 - <p> After you have created your token, insert it in the env file</p>
 - <p> Run the command `make up-build` to build the project initially </p>
 - <p> Run the command `make up` to start the project subsequently </p>
