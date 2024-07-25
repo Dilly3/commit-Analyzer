@@ -149,30 +149,35 @@ Retrieve repo by language.
   "status": 200
   } 
   ```
- <p style="color:green; font-style:normal; font-weight: bold; text-decoration: underline;"> GET localhost:8086/v1/repo-stars </p>
+ <p style="color:green; font-style:normal; font-weight: bold; text-decoration: underline;"> GET localhost:8086/v1/authors/top/{repo_name}/{limit} </p>
 
-Retrieve repos by stars.
+Get the top N commits authors by commit counts from the database.
+**Request Parameters:**
+
+- `repo_name` (path parameter, required): The repo name you want to query.
+- `limit` (path parameter, Optional): The limit of the top authors to retrieve. if not provided, the default is 10.
 
 **Response:**
 - `200 OK`: repos retrieved successfully.
 <p style="color:green; font-style:normal; font-weight: bold"> Sample Response </p>
   
 ```json
-{ 
-  "message": "repos retrieved successfully",
-"data": [
 {
-"id": 1,
-"name": "grit",
-"created_at": "",
-"html_url": "https://github.com/mojombo/grit",
-"description": "**Grit is no longer maintained. Check out libgit2/rugged.** Grit gives you object oriented read/write access to Git repositories via Ruby.",
-"language": "",
-"forks": 0,
-"stargazers_count": 0,
-"open_issues": 0
-}
+  "message": "top authors by commits retrieved",
+  "data": [
+    {
+      "author": "name",
+      "commit_count": 3
+    },
+    {
+      "author": "name",
+      "commit_count": 2
+    },
+    {
+      "author": "",
+      "commit_count": 1
+    }
   ],
-    "status": 200
-  } 
+  "status": 200
+}
   ```
