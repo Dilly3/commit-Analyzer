@@ -46,6 +46,15 @@ func (cs *CommitStore) GetLastCommit(ctx context.Context, repoName string) (*mod
 	return &commit, err
 }
 
+// GetTopCommitsAuthorsByCount gets the top commit authors by count
+func (cs *CommitStore) GetTopCommitsAuthorsByCount(ctx context.Context, repoName string, limit int) ([]model.AuthorCommits, error) {
+	var authorCommits []model.AuthorCommits
+	cs.storage.DB.WithContext(ctx).Model(&model.CommitInfo{}).Select("author_name as author, COUNT(*) as commits_count").Where("repo_name = ?",
+		repoName).Group("author_name").Order("commits_count desc").Limit(limit).Find(&authorCommits)
+
+	return authorCommits, nil
+}
+
 // DeleteByDate hard deletes commits by date
 func (cs *CommitStore) DeleteByDate(ctx context.Context, repoName, date string) error {
 	return cs.storage.DB.WithContext(ctx).Delete(&model.CommitInfo{}, "date > ? AND repo_name = ? ", date, repoName).Error

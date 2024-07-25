@@ -13,4 +13,5 @@ type ICommitRepository interface {
 	SaveCommits(ctx context.Context, commits []model.CommitInfo) error
 	GetLastCommit(ctx context.Context, repoName string) (*model.CommitInfo, error)
 	DeleteByDate(ctx context.Context, repoName, date string) error
+	GetTopCommitsAuthorsByCount(ctx context.Context, repoName string, limit int) ([]model.AuthorCommits, error)
 }
