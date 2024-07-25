@@ -47,7 +47,7 @@ REDIS_PORT=6379
 - <p> Run the command `make up` to start the project subsequently </p>
 
 ## Test  
-<p> To run the test, run the command <a style="color: coral; font-size: 24px">`make test`<a> </p>
+<p> To run the test, run the command <a style="color: coral; font-size: 24px;"> make test</a></p>
 
 #### API Features
 ```Go,
