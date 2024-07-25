@@ -9,3 +9,9 @@ type AuthorInfo struct {
 func (AuthorInfo) TableName() string {
 	return "authors"
 }
+
+// AuthorCommits struct to hold authorCommits
+type AuthorCommits struct {
+	Author       string `gorm:"author" json:"author"`
+	CommitsCount int    `gorm:"commit_count" json:"commit_count"`
+}
