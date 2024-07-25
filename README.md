@@ -3,6 +3,7 @@ Houdini is a simple REST API that retrieves information about repositories and c
 ### Env Variables
 <p> The project uses the following environment variables </p>
 
+#### .env
 ```Go,
  
 export HOUDINI_PORT=:8086
@@ -29,7 +30,26 @@ export HOUDINI_REDIS_User=user123
 export HOUDINI_REDIS_ADDR=redis:6379
 export HOUDINI_REDIS_PORT=6379
 ```
-<p> the env file in the root directory of the project houses the necessary environment variables for the project to run successfully. </p> 
+#### .env_test
+```Go,
+export HOUDINI_PORT=:8086
+export HOUDINI_CRON_INTERVAL=10
+export HOUDINI_POSTGRES_HOST=localhost
+export HOUDINI_POSTGRES_PASSWORD=docker
+export HOUDINI_POSTGRES_USER=docker
+export HOUDINI_POSTGRES_PORT=5432
+export HOUDINI_POSTGRES_DB=houdini
+export HOUDINI_GITHUB_TOKEN=
+export HOUDINI_GITHUB_OWNER=chromium
+export HOUDINI_GITHUB_REPO=chromium
+export HOUDINI_GITHUB_SINCE=2024-07-15T00:00:00Z
+export HOUDINI_POSTGRES_TIMEZONE={your_timezone} # eg Africa/Lagos
+export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
+```
+
+<p> the .env file and the .env_test file in the root directory of the project houses the necessary environment variables for the project to run 
+successfully. </p> 
+<p> create the respective env files and fill in the variables before you run the app</p>
 <p> *** N/B Add your github token to the HOUDINI_GITHUB_TOKEN variable in the .env file </p>
 <p> The HOUDINI_CRON_INTERVAL variable is the delay time in minutes for the cron job to run. </p>
 
