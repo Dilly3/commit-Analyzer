@@ -10,7 +10,9 @@ Github API is used to retrieve the repository information and commits.</h3>
 
 <h3 style="color:dodgerblue;"> Endpoints </h3>
 
-<p style="color:green; font-style: normal;text-decoration: underline; font-weight: bold;"> Patch localhost:8086/v1/settings
+#### 1) Update Settings.
+
+<p style="color:green; font-style: normal;text-decoration: underline; font-weight: bold;"> Patch localhost:8086/v1/settings </p>
 
 update the settings for the cron jobs. Set the repo to monitor and time since for commits.
 After the settings are updated, a database reset is perform to delete records in the database newer than the since date.
@@ -45,9 +47,12 @@ Since string `json:"since" validate:"required"`
 }
   ```
 
+####  2) Retrieve repo by name.
+
 <p style="color:green; font-style:normal; font-weight: bold; text-decoration: underline;"> GET localhost:8086/v1/repo/{name}
 
-Retrieve a repo by name.
+
+<p> Retrieve repo by name gets the repo by the repo name </p>
 
 **Request Parameters:**
 
@@ -85,9 +90,11 @@ Retrieve a repo by name.
     "status": 404
   }
   ```
+
+#### 3) Retrieve commits by repo name.
 <p style="color:green; font-style:normal; font-weight: bold;text-decoration: underline;">GET localhost:8086/v1/commits/{name}/{limit} </p>
 
-Retrieve commits by repo name.
+<p>Retrieve commits by repo name get all the commits associated to a repo</p>
 
 **Request Parameters:**
 
@@ -115,9 +122,10 @@ Retrieve commits by repo name.
     "status": 200
   } 
   ```
+#### 4) Retrieve repo by language.
 <p style="color:green; font-style:normal; font-weight: bold;text-decoration: underline;">GET localhost:8086/v1/repos/{language}/{limit} </p>
 
-Retrieve repo by language.
+
 
 **Request Parameters:**
 
@@ -149,9 +157,11 @@ Retrieve repo by language.
   "status": 200
   } 
   ```
+#### 5) Get the top N commits authors by commit counts from the database.
  <p style="color:green; font-style:normal; font-weight: bold; text-decoration: underline;"> GET localhost:8086/v1/authors/top/{repo_name}/{limit} </p>
 
-Get the top N commits authors by commit counts from the database.
+
+
 **Request Parameters:**
 
 - `repo_name` (path parameter, required): The repo name you want to query.

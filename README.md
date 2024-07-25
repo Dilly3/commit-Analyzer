@@ -86,9 +86,7 @@ build </p>
 - Retrieve repositories by language
 - Retrive top authors by commit count
 - Retrieve commits by repository name
-- Retrieve commits by repository name and limit
-- Retrieve repositories by language and limit
-- Retrieve commits by repository name and limit
+- Retrieve repository by name
 ```
 <p style="color: yellow; font-weight: bold;"> *** You can read more on the API documentation in the docs folder in the root directory </p>
 ### Author
