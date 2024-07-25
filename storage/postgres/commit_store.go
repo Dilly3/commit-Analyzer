@@ -49,9 +49,11 @@ func (cs *CommitStore) GetLastCommit(ctx context.Context, repoName string) (*mod
 // GetTopCommitsAuthorsByCount gets the top commit authors by count
 func (cs *CommitStore) GetTopCommitsAuthorsByCount(ctx context.Context, repoName string, limit int) ([]model.AuthorCommits, error) {
 	var authorCommits []model.AuthorCommits
-	cs.storage.DB.WithContext(ctx).Model(&model.CommitInfo{}).Select("author_name as author, COUNT(*) as commits_count").Where("repo_name = ?",
-		repoName).Group("author_name").Order("commits_count desc").Limit(limit).Find(&authorCommits)
-
+	err := cs.storage.DB.WithContext(ctx).Model(&model.CommitInfo{}).Select("author_name as author, COUNT(*) as commits_count").Where("repo_name = ?",
+		repoName).Group("author_name").Order("commits_count desc").Limit(limit).Find(&authorCommits).Error
+	if err != nil {
+		return nil, err
+	}
 	return authorCommits, nil
 }
 
