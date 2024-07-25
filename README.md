@@ -43,8 +43,12 @@ REDIS_PORT=6379
 - <p style="color: red; font-weight: bold;"> *** Add the GitHub token before you run the app </p>
 - <p> How to create gitHub token <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic">Token</a></p>
 - <p> After you have created your token, insert it in the env file</p>
-- <p> Run the command `make up-build` to build the project initially </p>
-- <p> Run the command `make up` to start the project subsequently </p>
+- <p> Now you are ready to run the app</p>
+
+## Run App
+<p> Initially , to build the App, run the command <a style="color: coral; font-size: 20px;"> make up-build </a> to build and run the app </p>
+<p> Subsequently, to run the app, run <a style="color: coral; font-size: 20px;"> make up </a> to spin up the app. This runs the app without a fresh 
+build </p>
 
 ## Test  
 <p> To run the test, run the command <a style="color: coral; font-size: 24px;"> make test</a></p>
