@@ -18,7 +18,7 @@ POSTGRES_PASSWORD=docker
 POSTGRES_USER=docker
 POSTGRES_PORT=5432
 POSTGRES_DB=houdini
-POSTGRES_TIMEZONE=Africa/Lagos
+POSTGRES_TIMEZONE={insert_timezone} # eg Africa/Lagos
 
 GITHUB_BASE_URL=https://api.github.com/
 # set your github token here, you can generate one from github
