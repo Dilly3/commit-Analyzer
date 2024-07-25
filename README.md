@@ -51,6 +51,7 @@ REDIS_PORT=6379
 
 #### API Features
 ```Go,
+- Update Settings
 - Retrieve repositories by language
 - Retrieve commits by repository name
 - Retrieve commits by repository name and limit
