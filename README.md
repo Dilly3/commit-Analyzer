@@ -1,79 +1,61 @@
 ## HOUDINI v1.0.0
-Houdini is a simple REST API that retrieves information about repositories and commits from GitHub.
-### Env Variables
-<p> The project uses the following environment variables </p>
+Houdini is a simple REST API that retrieves information about repositories and its commits from GitHub.
+The API is built with Go, Docker,Redis,and Postgres. The API retrieves repository and its commits from GitHub based on the settings provided and 
+stores them in a Postgres database. 
+The settings {repo owner , repo name, perPage count and since date } are persisted in the redis cache. 
+The API also has a cron job that runs at interval to check for commits and update the data in the database.
 
-#### .env
+#### env example
 ```Go,
  
-export HOUDINI_PORT=:8086
+PORT=:8086
 # set cron interval value in minutes (60 = 1 hour)
-export HOUDINI_CRON_INTERVAL=4
-export HOUDINI_NETWORK_RETRY=3
+CRON_INTERVAL=4
+NETWORK_RETRY=3
 
-export HOUDINI_POSTGRES_HOST=db
-export HOUDINI_POSTGRES_PASSWORD=docker
-export HOUDINI_POSTGRES_USER=docker
-export HOUDINI_POSTGRES_PORT=5432
-export HOUDINI_POSTGRES_DB=houdini
-export HOUDINI_POSTGRES_TIMEZONE=Africa/Lagos
+POSTGRES_HOST=db
+POSTGRES_PASSWORD=docker
+POSTGRES_USER=docker
+POSTGRES_PORT=5432
+POSTGRES_DB=houdini
+POSTGRES_TIMEZONE=Africa/Lagos
 
-export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
-export HOUDINI_GITHUB_TOKEN={your_github_token}
-export HOUDINI_GITHUB_OWNER=chromium
-export HOUDINI_GITHUB_REPO=chromium
-export HOUDINI_GITHUB_PER_PAGE=60
-export HOUDINI_GITHUB_SINCE=2023-07-01T00:00:00Z
+GITHUB_BASE_URL=https://api.github.com/
+# set your github token here, you can generate one from github
+# read the installation guide
+GITHUB_TOKEN={your_github_token}
+GITHUB_OWNER=chromium
+GITHUB_REPO=chromium
+GITHUB_PER_PAGE=60
+GITHUB_SINCE=2023-07-01T00:00:00Z
 
-export HOUDINI_REDIS_PASSWORD=redis123
-export HOUDINI_REDIS_User=user123
-export HOUDINI_REDIS_ADDR=redis:6379
-export HOUDINI_REDIS_PORT=6379
+REDIS_PASSWORD=redis123
+REDIS_User=user123
+REDIS_ADDR=redis:6379
+REDIS_PORT=6379
 ```
-#### .env_test
-```Go,
-export HOUDINI_PORT=:8086
-export HOUDINI_CRON_INTERVAL=10
-export HOUDINI_POSTGRES_HOST=localhost
-export HOUDINI_POSTGRES_PASSWORD=docker
-export HOUDINI_POSTGRES_USER=docker
-export HOUDINI_POSTGRES_PORT=5432
-export HOUDINI_POSTGRES_DB=houdini
-export HOUDINI_GITHUB_TOKEN=
-export HOUDINI_GITHUB_OWNER=chromium
-export HOUDINI_GITHUB_REPO=chromium
-export HOUDINI_GITHUB_SINCE=2024-07-15T00:00:00Z
-export HOUDINI_POSTGRES_TIMEZONE={your_timezone} # eg Africa/Lagos
-export HOUDINI_GITHUB_BASE_URL=https://api.github.com/
-```
-
-<p> the .env file and the .env_test file in the root directory of the project houses the necessary environment variables for the project to run 
-successfully. </p> 
-<p> create the respective env files and fill in the variables before you run the app</p>
-<p> *** N/B Add your github token to the HOUDINI_GITHUB_TOKEN variable in the .env file </p>
-<p> The HOUDINI_CRON_INTERVAL variable is the delay time in minutes for the cron job to run. </p>
-
 
 ## Installation
 - <p style="color: red; font-weight: bold;"> To install the project, you need docker running on ur machine </p>
 - <p> Clone the project from the repository <a href="https://github.com/Dilly3/houdini">Github</a> </p>
 - <p> Run the command `go mod tidy` </p>
-- <p style="color: red; font-weight: bold;"> *** Set up ur environment variables (github token). Add the Github token before you run the app </p>
+- <p> Create a .env file in the root directory of the project , use the env example above </p> 
+- <p style="color: red; font-weight: bold;"> *** Add the GitHub token before you run the app </p>
 - <p> How to create gitHub token <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic">Token</a></p>
 - <p> After you have created your token, insert it in the env file</p>
 - <p> Run the command `make up-build` to build the project initially </p>
 - <p> Run the command `make up` to start the project subsequently </p>
 
 ## Test  
-<p> To run the test, run the command `make test` </p>
+<p> To run the test, run the command <a style="color: coral; font-size: 24px">`make test`<a> </p>
+
+#### API Features
 ```Go,
- Features
 - Retrieve repositories by language
 - Retrieve commits by repository name
 - Retrieve commits by repository name and limit
 - Retrieve repositories by language and limit
 - Retrieve commits by repository name and limit
-- 
 ```
 <p style="color: yellow; font-weight: bold;"> *** You can read more on the API documentation in the docs folder in the root directory </p>
 ### Author

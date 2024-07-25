@@ -20,7 +20,11 @@ var handler *Handler
 func TestMain(m *testing.M) {
 	zerolog.TimeFieldFormat = time.RFC3339
 	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
-	config.Init(".env_test")
+	err := config.LoadConfig(".env", &logger)
+	if err != nil {
+		logger.Error().Err(err).Msgf("Error loading .env file: %v", err)
+		os.Exit(1)
+	}
 	c := config.Config
 	ghc := github.NewGHClient(c.GithubBaseURL, c.GithubToken)
 	gh.NewGHubITR(ghc)

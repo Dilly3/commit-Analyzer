@@ -3,8 +3,9 @@ package config
 import (
 	"fmt"
 	"github.com/joho/godotenv"
-	"github.com/kelseyhightower/envconfig"
+	"github.com/rs/zerolog"
 	"log"
+	"os"
 	"path/filepath"
 	"runtime"
 	"strconv"
@@ -19,44 +20,68 @@ var (
 )
 
 type Configuration struct {
-	Port             string `envconfig:"port"`
-	Env              string `envconfig:"env"`
-	PostgresHost     string `envconfig:"postgres_host"`
-	PostgresPort     string `envconfig:"postgres_port"`
-	PostgresUser     string `envconfig:"postgres_user"`
-	PostgresPassword string `envconfig:"postgres_password"`
-	PostgresDB       string `envconfig:"postgres_db"`
-	PostgresTimezone string `envconfig:"postgres_timezone"`
-	GithubBaseURL    string `envconfig:"github_base_url"`
-	GithubPerPage    string `envconfig:"github_per_page"`
-	GithubSince      string `envconfig:"github_since"`
-	GithubToken      string `envconfig:"github_token"`
-	GithubOwner      string `envconfig:"github_owner"`
-	GithubRepo       string `envconfig:"github_repo"`
-	CronInterval     string `envconfig:"cron_interval"`
-	NetworkRetry     int    `envconfig:"network_retry"`
-	RedisHost        string `envconfig:"redis_host"`
-	RedisADDR        string `envconfig:"redis_addr"`
-	RedisPassword    string `envconfig:"redis_password"`
-	RedisUser        string `envconfig:"redis_user"`
+	Port             string
+	Env              string
+	PostgresHost     string
+	PostgresPort     string
+	PostgresUser     string
+	PostgresPassword string
+	PostgresDB       string
+	PostgresTimezone string
+	GithubBaseURL    string
+	GithubPerPage    string
+	GithubSince      string
+	GithubToken      string
+	GithubOwner      string
+	GithubRepo       string
+	CronInterval     string
+	NetworkRetry     int
+	RedisHost        string
+	RedisADDR        string
+	RedisPassword    string
+	RedisUser        string
 }
 
-var Config = &Configuration{}
+var Config *Configuration
 
-func Init(envFile string) {
+func LoadConfig(envFile string, logger *zerolog.Logger) error {
 	_, b, _, _ := runtime.Caller(0)
-	basepath := filepath.Dir(b)
+	basePath := filepath.Dir(b)
 	if envFile == "" {
 		envFile = ".env"
 	}
 	log.Printf("sourcing %v", envFile)
-	if err := godotenv.Load(fmt.Sprintf("%s/../../%s", basepath, envFile)); err != nil {
-		log.Fatalf("couldn't load env vars: %v", err)
-	}
-	err := envconfig.Process("houdini", Config)
+	err := godotenv.Load(fmt.Sprintf("%s/../../%s", basePath, envFile))
 	if err != nil {
-		log.Fatalf("could not process env config: %v", err)
+		logger.Error().Err(err).Msgf("Error loading .env file: %v", err)
+		return err
 	}
+	Config = &Configuration{}
+	Config.Port = os.Getenv("PORT")
+
+	Config.PostgresHost = os.Getenv("POSTGRES_HOST")
+	Config.PostgresPort = os.Getenv("POSTGRES_PORT")
+	Config.PostgresUser = os.Getenv("POSTGRES_USER")
+	Config.PostgresPassword = os.Getenv("POSTGRES_PASSWORD")
+	Config.PostgresDB = os.Getenv("POSTGRES_DB")
+	Config.PostgresTimezone = os.Getenv("POSTGRES_TIMEZONE")
+	Config.GithubBaseURL = os.Getenv("GITHUB_BASE_URL")
+	Config.GithubPerPage = os.Getenv("GITHUB_PER_PAGE")
+	Config.GithubSince = os.Getenv("GITHUB_SINCE")
+	Config.GithubToken = os.Getenv("GITHUB_TOKEN")
+	Config.GithubOwner = os.Getenv("GITHUB_OWNER")
+	Config.GithubRepo = os.Getenv("GITHUB_REPO")
+	Config.CronInterval = os.Getenv("CRON_INTERVAL")
+	Config.NetworkRetry, err = strconv.Atoi(os.Getenv("NETWORK_RETRY"))
+	if err != nil {
+		logger.Error().Err(err).Msgf("Error converting network retry to int: %v", err)
+		return err
+	}
+	Config.RedisPassword = os.Getenv("REDIS_PASSWORD")
+	Config.RedisUser = os.Getenv("REDIS_USER")
+	Config.RedisADDR = os.Getenv("REDIS_ADDR")
+	return nil
+
 }
 
 func GetSettings() map[string]string {

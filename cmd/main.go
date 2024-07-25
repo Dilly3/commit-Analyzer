@@ -20,7 +20,11 @@ func main() {
 	zerolog.TimeFieldFormat = time.RFC3339
 	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
 
-	config.Init(".env")
+	err := config.LoadConfig(".env", &logger)
+	if err != nil {
+		logger.Error().Err(err).Msgf("Error loading .env file: %v", err)
+		os.Exit(1)
+	}
 	c := config.Config
 	pgs := postgres.New(c, &logger)
 	repository.NewStore(pgs)
