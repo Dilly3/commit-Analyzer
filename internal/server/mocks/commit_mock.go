@@ -99,6 +99,21 @@ func (mr *MockICommitRepositoryMockRecorder) GetLastCommit(arg0, arg1 any) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastCommit", reflect.TypeOf((*MockICommitRepository)(nil).GetLastCommit), arg0, arg1)
 }
 
+// GetTopCommitsAuthorsByCount mocks base method.
+func (m *MockICommitRepository) GetTopCommitsAuthorsByCount(arg0 context.Context, arg1 string, arg2 int) ([]model.AuthorCommits, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetTopCommitsAuthorsByCount", arg0, arg1, arg2)
+	ret0, _ := ret[0].([]model.AuthorCommits)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetTopCommitsAuthorsByCount indicates an expected call of GetTopCommitsAuthorsByCount.
+func (mr *MockICommitRepositoryMockRecorder) GetTopCommitsAuthorsByCount(arg0, arg1, arg2 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTopCommitsAuthorsByCount", reflect.TypeOf((*MockICommitRepository)(nil).GetTopCommitsAuthorsByCount), arg0, arg1, arg2)
+}
+
 // SaveCommit mocks base method.
 func (m *MockICommitRepository) SaveCommit(arg0 context.Context, arg1 *model.CommitInfo) error {
 	m.ctrl.T.Helper()
