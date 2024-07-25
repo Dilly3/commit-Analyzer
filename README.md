@@ -59,35 +59,8 @@ houdini/
 └── go.mod
 ```
 
-#### env example
-```Go,
- 
-PORT=:8086
-# set cron interval value in minutes (60 = 1 hour)
-CRON_INTERVAL=4
-NETWORK_RETRY=3
-
-POSTGRES_HOST=db
-POSTGRES_PASSWORD=docker
-POSTGRES_USER=docker
-POSTGRES_PORT=5432
-POSTGRES_DB=houdini
-POSTGRES_TIMEZONE={insert_timezone} # eg Africa/Lagos
-
-GITHUB_BASE_URL=https://api.github.com/
-# set your github token here, you can generate one from github
-# read the installation guide
-GITHUB_TOKEN={your_github_token}
-GITHUB_OWNER=chromium
-GITHUB_REPO=chromium
-GITHUB_PER_PAGE=60
-GITHUB_SINCE=2023-07-01T00:00:00Z
-
-REDIS_PASSWORD=redis123
-REDIS_User=user123
-REDIS_ADDR=redis:6379
-REDIS_PORT=6379
-```
+### env example
+<p> Find the  <a style="color: coral; font-size: 20px;"> .env.example </a> file in the root directory to create a .env file </p>
 
 ## Installation
 - <p style="color: red; font-weight: bold;"> To install the project, you need docker running on ur machine </p>
@@ -111,6 +84,7 @@ build </p>
 ```Go,
 - Update Settings
 - Retrieve repositories by language
+- Retrive top authors by commit count
 - Retrieve commits by repository name
 - Retrieve commits by repository name and limit
 - Retrieve repositories by language and limit
