@@ -5,6 +5,46 @@ stores them in a Postgres database.
 The settings {repo owner , repo name, perPage count and since date } are persisted in the redis cache. 
 The API also has a cron job that runs at interval to check for commits and update the data in the database.
 
+### Structure 
+```Go,
+houdini/
+│
+├── cmd/
+│   └── main.go
+| 
+│
+├── internal/
+│   ├── config/
+│   │   └── config.go
+│   └── github/
+│       └── commits.go
+│       └── github_interactor.go
+│       └── helper.go
+│       └── repo.go
+│
+├── pkg/
+│   └── github/
+│       └── get_repo.go
+│       └── github_client.go
+│       └── http.go
+│       └── list_commits.go
+│       └── model.go
+└   └── cron/ 
+│       └── cron.go
+├── storage/
+│   └── postgres/
+│       └── commit_store.go
+│       └── repo_store.go
+        └── postgres.go
+        
+│   └── redis/
+│       └── redis_client.go
+│
+├── .env
+├── README.md
+└── go.mod
+```
+
 #### env example
 ```Go,
  
