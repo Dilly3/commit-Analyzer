@@ -32,6 +32,7 @@ func NewChiRouter(h *Handler, limiterDuration time.Duration) *chi.Mux {
 	limitRoutes.Get("/v1/commits/{name}/{limit}", h.GetCommitsByRepoName)
 	limitRoutes.Get("/v1/repos/{language}/{limit}", h.GetReposByLanguage)
 	limitRoutes.Get("/v1/repos-stars/{limit}", h.GetRepoByStarsCount)
+	limitRoutes.Get("/v1/authors/top/{repo_name}/{limit}", h.GetTopAuthorsByCommitsHandler)
 
 	return router
 }
