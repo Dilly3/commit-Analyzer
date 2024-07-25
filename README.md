@@ -21,6 +21,20 @@ houdini/
 │       └── github_interactor.go
 │       └── helper.go
 │       └── repo.go
+    └── models/
+         └── commit.go
+         └── repo.go
+         └── author.go
+    
+    └── repository/
+    
+            └── cache/
+              └── ICache.go
+          └── ICommit_.go
+          └── IRepo_.go
+          └── IStore.go
+        
+    └── server/
 │
 ├── pkg/
 │   └── github/
