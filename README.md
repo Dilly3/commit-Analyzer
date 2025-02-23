@@ -1,5 +1,5 @@
-## HOUDINI v1.0.0
-Houdini is a simple REST API that retrieves information about repositories and its commits from GitHub.
+## COMMIT ANALYZER v1.0.0
+Commit Analyzer is a simple REST API that retrieves information about repositories and its commits from GitHub.
 The API is built with Go, Docker,Redis,and Postgres. The API retrieves repository and its commits from GitHub based on the settings provided and 
 stores them in a Postgres database. 
 The settings {repo owner , repo name, perPage count and since date } are persisted in the redis cache. 
@@ -7,7 +7,7 @@ The API also has a cron job that runs at interval to check for commits and updat
 
 ### Structure 
 ```Go,
-houdini/
+commit-analyzer/
 │
 ├── cmd/
 │   └── main.go
@@ -64,7 +64,7 @@ houdini/
 
 ## Installation
 - <p style="color: red; font-weight: bold;"> To install the project, you need docker running on ur machine </p>
-- <p> Clone the project from the repository <a href="https://github.com/Dilly3/houdini">Github</a> </p>
+- <p> Clone the project from the repository <a href="https://github.com/Dilly3/commit-analyzer">Github</a> </p>
 - <p> Run the command `go mod tidy` </p>
 - <p> Create a .env file in the root directory of the project , use the env example above </p> 
 - <p style="color: red; font-weight: bold;"> *** Add the GitHub token before you run the app </p>
